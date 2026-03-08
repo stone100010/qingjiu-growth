@@ -3,17 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 255, 255, 255;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 15, 23, 42;
+  --background-end-rgb: 88, 28, 135;
 }
 
 body {
@@ -24,10 +16,96 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+  min-height: 100vh;
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* 自定义动画 */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* 玻璃态效果 */
+.glass-effect {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+/* 霓虹发光效果 */
+.neon-glow {
+  box-shadow: 0 0 5px rgba(168, 85, 247, 0.5),
+              0 0 10px rgba(168, 85, 247, 0.3),
+              0 0 20px rgba(168, 85, 247, 0.1);
+}
+
+.neon-text-glow {
+  text-shadow: 0 0 5px rgba(236, 72, 153, 0.8),
+               0 0 10px rgba(236, 72, 153, 0.5),
+               0 0 20px rgba(236, 72, 153, 0.3);
+}
+
+/* 进度条动画 */
+@keyframes progress-shine {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.progress-bar-animated {
+  background: linear-gradient(
+    90deg,
+    rgb(236, 72, 153) 0%,
+    rgb(168, 85, 247) 50%,
+    rgb(236, 72, 153) 100%
+  );
+  background-size: 200% 100%;
+  animation: progress-shine 2s linear infinite;
+}
+
+/* 卡片悬浮效果 */
+.hover-card-effect {
+  transition: all 0.3s ease;
+}
+
+.hover-card-effect:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 40px rgba(168, 85, 247, 0.3);
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(168, 85, 247, 0.5);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(168, 85, 247, 0.8);
 }
