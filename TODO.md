@@ -19,6 +19,21 @@
   - [x] 创建.env文件
   - [x] 创建.env.example
 
+- [x] **GitHub配置完成** ✓
+  - [x] 创建GitHub仓库：stone100010/qingjiu-growth
+  - [x] 配置Git远程仓库origin
+  - [x] 推送代码到GitHub（分支：main）
+  - [x] 仓库地址：https://github.com/stone100010/qingjiu-growth
+  - [x] 存储配置信息到TOOLS.md
+
+- [ ] **Vercel配置进行中**
+  - [x] 获取Vercel Token
+  - [ ] 安装Vercel CLI（使用npx）
+  - [ ] 登录Vercel账号
+  - [ ] 连接GitHub仓库
+  - [ ] 配置环境变量
+  - [ ] 首次部署
+
 - [ ] **数据库配置**
   - [ ] ⚠️ **需要小阳子批准**：创建qingjiu_growth数据库
     ```
