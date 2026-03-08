@@ -26,13 +26,17 @@
   - [x] 仓库地址：https://github.com/stone100010/qingjiu-growth
   - [x] 存储配置信息到TOOLS.md
 
-- [ ] **Vercel配置进行中**
+- [x] **Vercel配置完成** ✓
   - [x] 获取Vercel Token
-  - [ ] 安装Vercel CLI（使用npx）
-  - [ ] 登录Vercel账号
-  - [ ] 连接GitHub仓库
-  - [ ] 配置环境变量
-  - [ ] 首次部署
+  - [x] 创建Vercel项目（ID: prj_HUIKWtah0FPfN5TOFjYjOTaKBIoe）
+  - [x] 连接GitHub仓库
+  - [x] 配置环境变量（DATABASE_URL）
+  - [x] 触发首次部署（ID: dpl_eZ3mNJ6PR1RHLA8G1qme7v4ETvVa）
+  - [x] 部署状态：INITIALIZING（初始化中）
+
+**Vercel项目信息**：
+- 项目URL：https://qingjiu-growth-stone100010s-projects.vercel.app
+- 部署检查：https://vercel.com/stone100010s-projects/qingjiu-growth
 
 - [ ] **数据库配置**
   - [ ] ⚠️ **需要小阳子批准**：创建qingjiu_growth数据库
