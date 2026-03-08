@@ -1,4 +1,5 @@
 import { getTasks, getCurrentTasks, getTodayTasks, getUpcomingTasks } from '@/mock';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function TasksPage() {
   const { current, today, upcoming } = getTasks();
@@ -17,7 +18,8 @@ export default function TasksPage() {
         </div>
 
         {/* 当前任务（大卡片） */}
-        <div className="mb-8 md:mb-12">
+        <ScrollReveal>
+          <div className="mb-8 md:mb-12">
           <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center gap-2">
             <span>⚡</span> 当前任务
           </h2>
@@ -56,9 +58,11 @@ export default function TasksPage() {
             </div>
           ))}
         </div>
+        </ScrollReveal>
 
         {/* 今日任务时间轴 */}
-        <div className="mb-8 md:mb-12">
+        <ScrollReveal delay={100}>
+          <div className="mb-8 md:mb-12">
           <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center gap-2">
             <span>📅</span> 今日任务
           </h2>
@@ -149,9 +153,11 @@ export default function TasksPage() {
             ))}
           </div>
         </div>
+        </ScrollReveal>
 
         {/* 即将到来 */}
-        <div className="mb-8 md:mb-12">
+        <ScrollReveal delay={200}>
+          <div className="mb-8 md:mb-12">
           <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center gap-2">
             <span>🔜</span> 即将到来
           </h2>
@@ -175,6 +181,7 @@ export default function TasksPage() {
             ))}
           </div>
         </div>
+        </ScrollReveal>
 
         {/* Footer */}
         <div className="text-center text-purple-400 py-8">
