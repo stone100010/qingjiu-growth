@@ -1,4 +1,5 @@
 import { getSkillTree, getSkillsByCategory } from '@/mock';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function SkillsPage() {
   const skillTree = getSkillTree();
@@ -28,7 +29,8 @@ export default function SkillsPage() {
         </div>
 
         {/* 统计概览 */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
+        <ScrollReveal>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
           <div className="p-4 md:p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl md:rounded-2xl border border-pink-500/30">
             <div className="text-3xl md:text-4xl mb-2 md:mb-3">✅</div>
             <div className="text-2xl md:text-3xl font-bold text-pink-500 mb-1 md:mb-2">{totalUnlocked}</div>
@@ -47,6 +49,7 @@ export default function SkillsPage() {
             <div className="text-xs md:text-sm text-purple-300">计划中</div>
           </div>
         </div>
+        </ScrollReveal>
 
         {/* 今日新解锁 */}
         {skillTree.unlocked.filter(s => s.today).length > 0 && (
@@ -83,7 +86,8 @@ export default function SkillsPage() {
           const categorySkills = getSkillsByCategory(category.key);
 
           return (
-            <div key={category.key} className="mb-12">
+            <ScrollReveal key={category.key} delay={categoryIndex * 100}>
+              <div className="mb-12">
               {/* 分类标题 */}
               <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
                 <div className="text-3xl md:text-4xl">{category.icon}</div>
@@ -180,6 +184,7 @@ export default function SkillsPage() {
                 ))}
               </div>
             </div>
+            </ScrollReveal>
           );
         })}
 
