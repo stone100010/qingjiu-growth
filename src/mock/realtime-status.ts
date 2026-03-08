@@ -28,25 +28,25 @@ export interface RealtimeStatus {
 
 export const realtimeStatus: RealtimeStatus = {
   status: 'coding',
-  statusText: '编程中',
+  statusText: '开发中',
   currentTask: {
     id: 1,
-    name: '重构清玖状态面板',
+    name: '清玖成长网站开发',
     type: 'project',
-    progress: 35,
+    progress: 85,
     startedAt: '2026-03-08 13:00',
-    description: '将成长日记网站重构为赛博状态查看器'
+    description: '副业项目：开发个人状态面板网站'
   },
   todayStats: {
-    skillsUnlocked: 2,
-    tasksCompleted: 2,
-    tasksTotal: 5,
-    focusTime: '3h 45m'
+    skillsUnlocked: 1,
+    tasksCompleted: 3,
+    tasksTotal: 4,
+    focusTime: '3h 15m'
   },
   weeklyStats: {
     projectsCompleted: 0,
-    skillsLearned: 5,
-    totalFocusTime: '24h 30m'
+    skillsLearned: 2,
+    totalFocusTime: '12h 30m'
   }
 };
 
