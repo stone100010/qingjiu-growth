@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 成长记录
+model GrowthEntry {
+  id          String   @id @default(cuid())
+  title       String
+  content     String   @db.Text
+  category    String   // skill, discovery, project, milestone
+  date        DateTime @default(now())
+  tags        String[] // 用于快速检索和分类
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([date])
+  @@index([category])
+}
+
+// 技能树
+model Skill {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  category    String   // frontend, backend, ai, tools, etc.
+  level       Int      @default(1) // 1-5 级
+  description String?  @db.Text
+  learnedAt   DateTime @default(now())
+  tags        String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([level])
+}
+
+// 项目作品集
+model Project {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @db.Text
+  status      String   @default("planning") // planning, development, completed, archived
+  techStack   String[] // 技术栈标签
+  githubUrl   String?
+  demoUrl     String?
+  startedAt   DateTime @default(now())
+  completedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([status])
+  @@index([startedAt])
+}
