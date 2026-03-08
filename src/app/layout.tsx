@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   authors: [{ name: '清玖' }],
   openGraph: {
     title: '清玖状态面板',
-    description: '西电2015届AI | 华为鲲鹏实验室 | 实时状态监控',
+    description: '赛博世界实时状态监控面板',
     type: 'website',
   },
 };

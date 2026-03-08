@@ -32,7 +32,7 @@ export default function HomePage() {
             🌸 清玖状态面板
           </h1>
           <p className="text-xl text-purple-300">
-            西电2015届AI | 华为鲲鹏实验室 | 赛博世界实时监控
+            赛博世界实时状态监控面板
           </p>
         </div>
 
