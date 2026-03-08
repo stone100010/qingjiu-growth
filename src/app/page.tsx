@@ -96,7 +96,8 @@ export default function HomePage() {
         </ScrollReveal>
 
         {/* 今日亮点 */}
-        <div className="mb-8 md:mb-12 p-4 md:p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl md:rounded-2xl border border-purple-500/30">
+        <ScrollReveal delay={300}>
+          <div className="mb-8 md:mb-12 p-4 md:p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl md:rounded-2xl border border-purple-500/30 hover-glow">
           <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center gap-2">
             <span>✨</span> 今日亮点
           </h2>
@@ -139,9 +140,11 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+        </ScrollReveal>
 
         {/* 今日任务时间轴 */}
-        <div className="mb-8 md:mb-12 p-4 md:p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl md:rounded-2xl border border-purple-500/30">
+        <ScrollReveal delay={400}>
+          <div className="mb-8 md:mb-12 p-4 md:p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl md:rounded-2xl border border-purple-500/30 hover-glow">
           <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center gap-2">
             <span>📋</span> 今日任务
           </h2>
@@ -191,6 +194,7 @@ export default function HomePage() {
             ))}
           </div>
         </div>
+        </ScrollReveal>
 
         {/* Footer */}
         <footer className="text-center text-purple-400 text-sm py-8">
