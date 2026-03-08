@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { getProjects, getRoadmap, getGoals } from '@/mock';
+import ScrollReveal from '@/components/ScrollReveal';
 
 export default function PlanningPage() {
   const [activeTab, setActiveTab] = useState<'projects' | 'roadmap' | 'goals'>('projects');
@@ -58,7 +59,8 @@ export default function PlanningPage() {
 
         {/* 项目 Tab */}
         {activeTab === 'projects' && (
-          <div className="space-y-4 md:space-y-6">
+          <ScrollReveal key="projects">
+            <div className="space-y-4 md:space-y-6">
             {projects.map((project) => (
               <div
                 key={project.id}
@@ -107,11 +109,13 @@ export default function PlanningPage() {
               </div>
             ))}
           </div>
+          </ScrollReveal>
         )}
 
         {/* 路线图 Tab */}
         {activeTab === 'roadmap' && (
-          <div className="space-y-6 md:space-y-8">
+          <ScrollReveal key="roadmap">
+            <div className="space-y-6 md:space-y-8">
             {roadmap.map((period, index) => (
               <div
                 key={period.period}
@@ -131,11 +135,13 @@ export default function PlanningPage() {
               </div>
             ))}
           </div>
+          </ScrollReveal>
         )}
 
         {/* 目标 Tab */}
         {activeTab === 'goals' && (
-          <div className="space-y-6 md:space-y-8">
+          <ScrollReveal key="goals">
+            <div className="space-y-6 md:space-y-8">
             {/* 技能目标 */}
             <div className="p-4 md:p-6 bg-slate-800/50 rounded-xl md:rounded-2xl border-2 border-purple-500/30">
               <h3 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center gap-2">
@@ -202,6 +208,7 @@ export default function PlanningPage() {
               </div>
             </div>
           </div>
+          </ScrollReveal>
         )}
 
         {/* Footer */}
