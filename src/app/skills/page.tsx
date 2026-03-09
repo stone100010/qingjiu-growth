@@ -31,6 +31,8 @@ const categories = [
 export default function SkillsPage() {
   const [skillTree, setSkillTree] = useState<SkillTree | null>(null)
   const [loading, setLoading] = useState(true)
+  const [searchTerm, setSearchTerm] = useState('')
+  const [filterCategory, setFilterCategory] = useState<string>('all')
 
   useEffect(() => {
     async function fetchData() {
@@ -79,7 +81,7 @@ export default function SkillsPage() {
   return (
     <main className="min-h-screen mesh-gradient organic-wave" style={{background: 'radial-gradient(ellipse at top left, rgba(94, 129, 107, 0.2), transparent 50%), radial-gradient(ellipse at bottom right, rgba(56, 163, 165, 0.15), transparent 50%), linear-gradient(135deg, #0f231c, #1a4455)'}}>
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8 md:mb-12">
+        <div className="text-center mb-6 md:mb-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-3 md:mb-4" style={{fontFamily: 'var(--font-tech)', background: 'linear-gradient(to right, #5e816b, #38a3a5, #4facfe)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
             ⚡ 技能树
           </h1>
@@ -89,7 +91,7 @@ export default function SkillsPage() {
         </div>
 
         <ScrollReveal>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
             <div className="p-4 md:p-6 rounded-3xl glass-organic" style={{border: '1px solid rgba(94, 129, 107, 0.3)'}}>
               <div className="text-3xl md:text-4xl mb-2 md:mb-3">✅</div>
               <div className="text-2xl md:text-3xl font-bold mb-1 md:mb-2" style={{color: '#38a3a5'}}>{totalUnlocked}</div>
@@ -110,6 +112,30 @@ export default function SkillsPage() {
           </div>
         </ScrollReveal>
 
+        <ScrollReveal delay={50}>
+          <div className="mb-6 md:mb-8 p-4 glass-organic rounded-2xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input
+                type="text"
+                placeholder="搜索技能..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 focus:outline-none focus:border-sky-500 text-white placeholder-gray-400"
+              />
+              <select
+                value={filterCategory}
+                onChange={(e) => setFilterCategory(e.target.value)}
+                className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 focus:outline-none focus:border-sky-500 text-white"
+              >
+                <option value="all">全部分类</option>
+                {categories.map(cat => (
+                  <option key={cat.key} value={cat.key}>{cat.label}</option>
+                ))}
+              </select>
+            </div>
+          </div>
+        </ScrollReveal>
+
         {categories.map((category, idx) => {
           const categorySkills = {
             unlocked: skillTree.unlocked.filter(s => s.category === category.key),
@@ -118,7 +144,14 @@ export default function SkillsPage() {
           }
           const allSkills = [...categorySkills.unlocked, ...categorySkills.learning, ...categorySkills.planned]
 
-          if (allSkills.length === 0) return null
+          const filteredSkills = allSkills.filter(skill => {
+            const matchesSearch = skill.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                                 (skill.description && skill.description.toLowerCase().includes(searchTerm.toLowerCase()))
+            const matchesCategory = filterCategory === 'all' || skill.category === filterCategory
+            return matchesSearch && matchesCategory
+          })
+
+          if (filteredSkills.length === 0) return null
 
           return (
             <ScrollReveal key={category.key} delay={100 + idx * 50}>
@@ -127,7 +160,7 @@ export default function SkillsPage() {
                   <span>{category.icon}</span> {category.label}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {allSkills.map((skill) => {
+                  {filteredSkills.map((skill) => {
                     const isUnlocked = skillTree.unlocked.some(s => s.id === skill.id)
                     const isLearning = skillTree.learning.some(s => s.id === skill.id)
 
