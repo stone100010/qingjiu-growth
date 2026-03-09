@@ -72,7 +72,7 @@ export default function PlanningPage() {
                       <p className="text-sm md:text-base mb-2" style={{color: '#94a89b'}}>{project.description}</p>
                       <div className="flex items-center gap-2 text-xs" style={{color: '#5e816b'}}>
                         <span>📅 {project.startDate}</span>
-                        {project.expectedEnd && <span>→ {project.expectedEnd}</span>}
+                        {project.endDate && <span>→ {project.endDate}</span>}
                       </div>
                     </div>
                     <div className="ml-0 md:ml-4 text-center min-w-16">
@@ -95,18 +95,18 @@ export default function PlanningPage() {
         <ScrollReveal delay={150}>
           {activeTab === 'roadmap' && (
             <div className="space-y-6">
-              {roadmap.map((item) => (
+              {roadmap.map((item, idx) => (
                 <div
-                  key={item.id}
+                  key={idx}
                   className="p-4 md:p-6 rounded-3xl hover-card-organic glass-organic"
                 >
-                  <div className="flex items-start gap-4">
-                    <div className="text-3xl md:text-4xl">{item.icon}</div>
-                    <div className="flex-1">
-                      <h3 className="text-lg md:text-xl font-bold mb-2" style={{fontFamily: 'var(--font-tech)'}}>{item.title}</h3>
-                      <p className="text-sm md:text-base mb-2" style={{color: '#94a89b'}}>{item.description}</p>
-                      <div className="text-xs" style={{color: '#5e816b'}}>预计时间：{item.timeline}</div>
-                    </div>
+                  <div className="text-xl md:text-2xl font-bold mb-3" style={{fontFamily: 'var(--font-tech)', color: '#38a3a5'}}>{item.period}</div>
+                  <div className="space-y-2">
+                    {item.items.map((subitem, subIdx) => (
+                      <div key={subIdx} className="text-sm md:text-base" style={{color: '#94a89b'}}>
+                        {subitem}
+                      </div>
+                    ))}
                   </div>
                 </div>
               ))}
@@ -116,18 +116,43 @@ export default function PlanningPage() {
 
         <ScrollReveal delay={200}>
           {activeTab === 'goals' && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              {goals.map((goal) => (
-                <div
-                  key={goal.id}
-                  className="p-4 md:p-6 rounded-3xl hover-card-organic glass-organic"
-                >
-                  <div className="text-2xl md:text-3xl mb-2">{goal.icon}</div>
-                  <h3 className="text-lg md:text-xl font-bold mb-2" style={{fontFamily: 'var(--font-tech)'}}>{goal.title}</h3>
-                  <p className="text-sm md:text-base" style={{color: '#94a89b'}}>{goal.description}</p>
-                  <div className="mt-3 text-xs" style={{color: '#5e816b'}}>目标：{goal.target}</div>
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-lg md:text-xl font-bold mb-3" style={{fontFamily: 'var(--font-organic)', color: '#38a3a5'}}>📚 技能目标</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {goals.skills.map((goal, idx) => (
+                    <div key={idx} className="p-3 md:p-4 rounded-2xl hover-card-organic glass-organic">
+                      <div className="text-base md:text-lg font-bold mb-1" style={{fontFamily: 'var(--font-tech)', color: '#38a3a5'}}>{goal.skill}</div>
+                      <div className="text-sm mb-2" style={{color: '#94a89b'}}>目标：{goal.target}</div>
+                      <div className="text-xs" style={{color: '#5e816b'}}>截止：{goal.deadline}</div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+              <div>
+                <h3 className="text-lg md:text-xl font-bold mb-3" style={{fontFamily: 'var(--font-organic)', color: '#38a3a5'}}>🎯 项目目标</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {goals.projects.map((goal, idx) => (
+                    <div key={idx} className="p-3 md:p-4 rounded-2xl hover-card-organic glass-organic">
+                      <div className="text-base md:text-lg font-bold mb-1" style={{fontFamily: 'var(--font-tech)', color: '#38a3a5'}}>{goal.project}</div>
+                      <div className="text-sm mb-2" style={{color: '#94a89b'}}>目标：{goal.target}</div>
+                      <div className="text-xs" style={{color: '#5e816b'}}>截止：{goal.deadline}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div>
+                <h3 className="text-lg md:text-xl font-bold mb-3" style={{fontFamily: 'var(--font-organic)', color: '#38a3a5'}}>💡 个人目标</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {goals.personal.map((goal, idx) => (
+                    <div key={idx} className="p-3 md:p-4 rounded-2xl hover-card-organic glass-organic">
+                      <div className="text-base md:text-lg font-bold mb-1" style={{fontFamily: 'var(--font-tech)', color: '#38a3a5'}}>{goal.goal}</div>
+                      <div className="text-sm mb-2" style={{color: '#94a89b'}}>目标：{goal.target}</div>
+                      <div className="text-xs" style={{color: '#5e816b'}}>截止：{goal.deadline}</div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           )}
         </ScrollReveal>

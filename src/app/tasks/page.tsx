@@ -75,17 +75,17 @@ export default function TasksPage() {
                       {task.name}
                     </h3>
                     <span className={`px-2 py-1 rounded text-xs ${
-                      task.status === 'done'
-                        ? 'bg-green-500/20 text-green-400'
+                      task.status === 'completed'
+                        ? 'text-green-400'
                         : task.status === 'in-progress'
-                        ? 'bg-yellow-500/20 text-yellow-400'
-                        : 'bg-gray-500/20 text-gray-400'
-                    }`} style={task.status === 'done' ? {background: 'rgba(74, 222, 128, 0.2)', color: '#4ade80'} : task.status === 'in-progress' ? {background: 'rgba(250, 204, 21, 0.2)', color: '#facc15'} : {background: 'rgba(120, 94, 73, 0.2)', color: '#785e49'}}>
-                      {task.status === 'done' ? '已完成' : task.status === 'in-progress' ? '进行中' : '待办'}
+                        ? 'text-yellow-400'
+                        : 'text-gray-400'
+                    }`} style={task.status === 'completed' ? {background: 'rgba(74, 222, 128, 0.2)', color: '#4ade80'} : task.status === 'in-progress' ? {background: 'rgba(250, 204, 21, 0.2)', color: '#facc15'} : {background: 'rgba(120, 94, 73, 0.2)', color: '#785e49'}}>
+                      {task.status === 'completed' ? '已完成' : task.status === 'in-progress' ? '进行中' : '待办'}
                     </span>
                   </div>
                   <p className="text-xs md:text-sm mb-2" style={{color: '#94a89b'}}>{task.description}</p>
-                  <div className="text-xs" style={{color: '#5e816b'}}>预计: {task.estimatedTime}</div>
+                  <div className="text-xs" style={{color: '#5e816b'}}>计划: {task.plannedFor || '未定'}</div>
                 </div>
               ))}
             </div>
@@ -112,7 +112,7 @@ export default function TasksPage() {
                     </span>
                   </div>
                   <p className="text-xs md:text-sm mb-2" style={{color: '#94a89b'}}>{task.description}</p>
-                  <div className="text-xs" style={{color: '#5e816b'}}>计划: {task.plannedDate}</div>
+                  <div className="text-xs" style={{color: '#5e816b'}}>计划: {task.plannedFor || '未定'}</div>
                 </div>
               ))}
             </div>

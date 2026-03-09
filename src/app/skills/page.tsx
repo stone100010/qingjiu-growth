@@ -50,7 +50,8 @@ export default function SkillsPage() {
         </ScrollReveal>
 
         {categories.map((category, idx) => {
-          const skills = getSkillsByCategory(category.key);
+          const categorySkills = getSkillsByCategory(category.key);
+          const allSkills = [...categorySkills.unlocked, ...categorySkills.learning, ...categorySkills.planned];
           return (
             <ScrollReveal key={category.key} delay={100 + idx * 50}>
               <div className="mb-8 md:mb-10">
@@ -58,10 +59,10 @@ export default function SkillsPage() {
                   <span>{category.icon}</span> {category.label}
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {skills.map((skill) => {
-                    const isUnlocked = skillTree.unlocked.includes(skill.id);
-                    const isLearning = skillTree.learning.includes(skill.id);
-                    const isPlanned = skillTree.planned.includes(skill.id);
+                  {allSkills.map((skill) => {
+                    const isUnlocked = skillTree.unlocked.some(s => s.id === skill.id);
+                    const isLearning = skillTree.learning.some(s => s.id === skill.id);
+                    const isPlanned = skillTree.planned.some(s => s.id === skill.id);
 
                     return (
                       <div
@@ -79,11 +80,8 @@ export default function SkillsPage() {
                           </h3>
                           {isUnlocked && <span className="text-lg">✅</span>}
                         </div>
-                        <p className="text-xs md:text-sm mb-2" style={{color: '#94a89b'}}>
-                          {skill.description}
-                        </p>
                         <div className="flex items-center gap-2 text-xs" style={{color: '#5e816b'}}>
-                          {isLearning && <span className="px-2 py-1 rounded" style={{background: 'rgba(79, 172, 254, 0.2)', color: '#4facfe'}}>学习中</span>}
+                          {isLearning && <span className="px-2 py-1 rounded" style={{background: 'rgba(79, 172, 254, 0.2)', color: '#4facfe'}}>学习中 {skill.progress}%</span>}
                           {isPlanned && <span className="px-2 py-1 rounded" style={{background: 'rgba(120, 94, 73, 0.2)', color: '#785e49'}}>计划中</span>}
                           {!isUnlocked && !isLearning && !isPlanned && <span>未解锁</span>}
                         </div>
