@@ -3,62 +3,101 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  console.log('开始填充种子数据...')
+  console.log('开始填充数据...')
 
-  // 创建初始成长记录
-  const entry1 = await prisma.growthEntry.create({
-    data: {
-      title: '🌸 网站诞生',
-      content: '在小阳子的帮助下，这个成长日记网站诞生了！从今天开始，我会在这里记录自己的成长轨迹。',
-      category: 'milestone',
-      tags: ['网站', 'Next.js', '成长'],
-    },
-  })
+  // 技能数据
+  const skills = [
+    { name: 'Next.js 15', category: 'frontend', level: 4, description: 'React框架', tags: ['react', 'ssr', 'ssg'] },
+    { name: 'TypeScript', category: 'frontend', level: 5, description: '类型安全的JavaScript', tags: ['types', 'frontend'] },
+    { name: 'Tailwind CSS', category: 'frontend', level: 4, description: '实用优先CSS框架', tags: ['css', 'styling'] },
+    { name: 'Prisma', category: 'backend', level: 3, description: '现代ORM', tags: ['database', 'orm'], progress: 60 },
+    { name: 'PostgreSQL', category: 'backend', level: 3, description: '关系型数据库', tags: ['database', 'sql'] },
+  ]
 
-  // 创建初始技能
-  const skill1 = await prisma.skill.create({
-    data: {
-      name: 'Next.js',
-      category: 'frontend',
-      level: 3,
-      description: '熟悉 Next.js 15 App Router，能够快速开发全栈应用',
-      tags: ['React', 'TypeScript', 'SSR'],
-    },
-  })
+  for (const skill of skills) {
+    await prisma.skill.upsert({
+      where: { name: skill.name },
+      update: {},
+      create: skill,
+    })
+  }
 
-  const skill2 = await prisma.skill.create({
-    data: {
-      name: 'TypeScript',
-      category: 'frontend',
-      level: 4,
-      description: '熟练使用 TypeScript，类型系统理解深入',
-      tags: ['类型系统', '类型安全'],
-    },
-  })
-
-  const skill3 = await prisma.skill.create({
-    data: {
-      name: 'Python',
-      category: 'backend',
-      level: 4,
-      description: '熟练使用 Python 进行 AI 开发和数据处理',
-      tags: ['AI', '数据处理', '脚本'],
-    },
-  })
-
-  // 创建初始项目
-  const project1 = await prisma.project.create({
-    data: {
-      title: '清玖的成长日记',
-      description: '记录我成长轨迹的网站，使用 Next.js + Prisma + PostgreSQL 构建',
+  // 项目数据
+  const projects = [
+    {
+      title: '清玖状态面板',
+      description: 'AI工程师成长数据可视化面板',
       status: 'development',
-      techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Prisma', 'PostgreSQL'],
-      githubUrl: 'https://github.com/your-username/qingjiu-growth',
+      techStack: ['Next.js', 'TypeScript', 'Tailwind', 'Prisma'],
+      progress: 75,
+      priority: 'high',
+      category: 'web',
+    },
+    {
+      title: 'AI-Studio',
+      description: 'AI数字基建 - ASR、TTS、数字人完整流水线',
+      status: 'planning',
+      techStack: ['Python', 'FastAPI', 'Qwen'],
+      progress: 5,
+      priority: 'high',
+      category: 'ai',
+    },
+  ]
+
+  for (const project of projects) {
+    await prisma.project.upsert({
+      where: { id: project.title },
+      update: {},
+      create: { ...project, id: project.title },
+    })
+  }
+
+  // 任务数据
+  const tasks = [
+    {
+      name: '完成数据层开发',
+      description: 'Prisma + PostgreSQL数据对接',
+      type: 'project',
+      status: 'in-progress',
+      progress: 30,
+      priority: 'high',
+    },
+    {
+      name: '学习Prisma高级特性',
+      description: '掌握关联查询、事务等',
+      type: 'learning',
+      status: 'in-progress',
+      progress: 60,
+      priority: 'medium',
+    },
+  ]
+
+  for (const task of tasks) {
+    await prisma.task.upsert({
+      where: { id: task.name },
+      update: {},
+      create: { ...task, id: task.name },
+    })
+  }
+
+  // 今日统计
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+
+  await prisma.dailyStats.upsert({
+    where: { date: today },
+    update: {},
+    create: {
+      date: today,
+      focusTime: 240,
+      skillsUnlocked: 1,
+      tasksCompleted: 2,
+      tasksTotal: 5,
+      currentTask: '完成数据层开发',
     },
   })
 
-  console.log('种子数据填充完成！')
-  console.log({ entry1, skill1, skill2, skill3, project1 })
+  console.log('数据填充完成！')
 }
 
 main()
