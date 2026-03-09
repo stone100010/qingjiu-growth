@@ -16,205 +16,85 @@ export default function SkillsPage() {
   const totalPlanned = skillTree.planned.length;
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white py-8">
-      <div className="container mx-auto px-4">
-        {/* Header */}
+    <main className="min-h-screen mesh-gradient organic-wave" style={{background: 'radial-gradient(ellipse at top left, rgba(94, 129, 107, 0.2), transparent 50%), radial-gradient(ellipse at bottom right, rgba(56, 163, 165, 0.15), transparent 50%), linear-gradient(135deg, #0f231c, #1a4455)'}}>
+      <div className="container mx-auto px-4 py-8">
         <div className="text-center mb-8 md:mb-12">
-          <h1 className="text-4xl md:text-5xl font-bold mb-3 md:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600">
+          <h1 className="text-4xl md:text-5xl font-bold mb-3 md:mb-4" style={{fontFamily: 'var(--font-tech)', background: 'linear-gradient(to right, #5e816b, #38a3a5, #4facfe)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
             ⚡ 技能树
           </h1>
-          <p className="text-lg md:text-xl text-purple-300">
+          <p style={{color: '#94a89b', fontSize: '1.125rem', lineHeight: '1.75rem'}}>
             每日点亮的技能成长路径
           </p>
         </div>
 
-        {/* 统计概览 */}
         <ScrollReveal>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-8 md:mb-12">
-          <div className="p-4 md:p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl md:rounded-2xl border border-pink-500/30">
-            <div className="text-3xl md:text-4xl mb-2 md:mb-3">✅</div>
-            <div className="text-2xl md:text-3xl font-bold text-pink-500 mb-1 md:mb-2">{totalUnlocked}</div>
-            <div className="text-xs md:text-sm text-purple-300">已解锁技能</div>
-          </div>
+            <div className="p-4 md:p-6 rounded-3xl glass-organic" style={{border: '1px solid rgba(94, 129, 107, 0.3)'}}>
+              <div className="text-3xl md:text-4xl mb-2 md:mb-3">✅</div>
+              <div className="text-2xl md:text-3xl font-bold mb-1 md:mb-2" style={{color: '#38a3a5'}}>{totalUnlocked}</div>
+              <div className="text-xs md:text-sm" style={{color: '#94a89b'}}>已解锁技能</div>
+            </div>
 
-          <div className="p-4 md:p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl md:rounded-2xl border border-yellow-500/30">
-            <div className="text-3xl md:text-4xl mb-2 md:mb-3">📚</div>
-            <div className="text-2xl md:text-3xl font-bold text-yellow-500 mb-1 md:mb-2">{totalLearning}</div>
-            <div className="text-xs md:text-sm text-purple-300">学习中</div>
-          </div>
+            <div className="p-4 md:p-6 rounded-3xl glass-organic" style={{border: '1px solid rgba(79, 172, 254, 0.3)'}}>
+              <div className="text-3xl md:text-4xl mb-2 md:mb-3">📚</div>
+              <div className="text-2xl md:text-3xl font-bold mb-1 md:mb-2" style={{color: '#4facfe'}}>{totalLearning}</div>
+              <div className="text-xs md:text-sm" style={{color: '#94a89b'}}>学习中</div>
+            </div>
 
-          <div className="p-4 md:p-6 bg-slate-800/50 backdrop-blur-sm rounded-xl md:rounded-2xl border border-purple-500/30">
-            <div className="text-3xl md:text-4xl mb-2 md:mb-3">📋</div>
-            <div className="text-2xl md:text-3xl font-bold text-purple-500 mb-1 md:mb-2">{totalPlanned}</div>
-            <div className="text-xs md:text-sm text-purple-300">计划中</div>
+            <div className="p-4 md:p-6 rounded-3xl glass-organic" style={{border: '1px solid rgba(120, 94, 73, 0.3)'}}>
+              <div className="text-3xl md:text-4xl mb-2 md:mb-3">📋</div>
+              <div className="text-2xl md:text-3xl font-bold mb-1 md:mb-2" style={{color: '#785e49'}}>{totalPlanned}</div>
+              <div className="text-xs md:text-sm" style={{color: '#94a89b'}}>计划中</div>
+            </div>
           </div>
-        </div>
         </ScrollReveal>
 
-        {/* 今日新解锁 */}
-        {skillTree.unlocked.filter(s => s.today).length > 0 && (
-          <div className="mb-8 md:mb-12 p-4 md:p-6 bg-gradient-to-br from-pink-900/30 to-purple-900/30 rounded-xl md:rounded-2xl border border-pink-500/30 backdrop-blur-sm">
-            <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center gap-2">
-              <span>🆕</span> 今日新解锁
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
-              {skillTree.unlocked.filter(s => s.today).map((skill) => (
-                <div
-                  key={skill.id}
-                  className="p-3 md:p-4 bg-slate-900/50 rounded-xl border-2 border-pink-500 hover:border-pink-400 transition-all hover:scale-105"
-                >
-                  <div className="font-bold text-base md:text-lg mb-2">{skill.name}</div>
-                  <div className="flex items-center gap-2 mb-2">
-                    <div className="flex gap-0.5">
-                      {Array.from({ length: skill.level || 0 }).map((_, i) => (
-                        <span key={i} className="text-pink-500 text-sm md:text-base">★</span>
-                      ))}
-                    </div>
-                    <span className="text-xs text-purple-400">Lv.{skill.level}</span>
-                  </div>
-                  <div className="text-xs text-purple-400">
-                    {skill.relatedProjects} 个项目
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* 技能分类网格 */}
-        {categories.map((category, categoryIndex) => {
-          const categorySkills = getSkillsByCategory(category.key);
-
+        {categories.map((category, idx) => {
+          const skills = getSkillsByCategory(category.key);
           return (
-            <ScrollReveal key={category.key} delay={categoryIndex * 100}>
-              <div className="mb-12">
-              {/* 分类标题 */}
-              <div className="flex items-center gap-2 md:gap-3 mb-4 md:mb-6">
-                <div className="text-3xl md:text-4xl">{category.icon}</div>
-                <h2 className="text-2xl md:text-3xl font-bold">{category.label}</h2>
-                <span className="text-xs md:text-sm text-purple-400">
-                  ({categorySkills.unlocked.length + categorySkills.learning.length} 项)
-                </span>
+            <ScrollReveal key={category.key} delay={100 + idx * 50}>
+              <div className="mb-8 md:mb-10">
+                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center gap-2" style={{fontFamily: 'var(--font-organic)'}}>
+                  <span>{category.icon}</span> {category.label}
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {skills.map((skill) => {
+                    const isUnlocked = skillTree.unlocked.includes(skill.id);
+                    const isLearning = skillTree.learning.includes(skill.id);
+                    const isPlanned = skillTree.planned.includes(skill.id);
+
+                    return (
+                      <div
+                        key={skill.id}
+                        className={`p-3 md:p-4 rounded-2xl transition-all hover-card-organic ${
+                          isUnlocked ? 'glass-organic' : 'bg-white/5'
+                        }`}
+                        style={{
+                          border: isUnlocked ? '1px solid rgba(94, 129, 107, 0.3)' : '1px solid rgba(120, 94, 73, 0.2)'
+                        }}
+                      >
+                        <div className="flex items-start justify-between mb-2">
+                          <h3 className="text-base md:text-lg font-semibold" style={{fontFamily: 'var(--font-tech)', color: isUnlocked ? '#38a3a5' : '#94a89b'}}>
+                            {skill.name}
+                          </h3>
+                          {isUnlocked && <span className="text-lg">✅</span>}
+                        </div>
+                        <p className="text-xs md:text-sm mb-2" style={{color: '#94a89b'}}>
+                          {skill.description}
+                        </p>
+                        <div className="flex items-center gap-2 text-xs" style={{color: '#5e816b'}}>
+                          {isLearning && <span className="px-2 py-1 rounded" style={{background: 'rgba(79, 172, 254, 0.2)', color: '#4facfe'}}>学习中</span>}
+                          {isPlanned && <span className="px-2 py-1 rounded" style={{background: 'rgba(120, 94, 73, 0.2)', color: '#785e49'}}>计划中</span>}
+                          {!isUnlocked && !isLearning && !isPlanned && <span>未解锁</span>}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-
-              {/* 技能网格 */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4">
-                {/* 已解锁 */}
-                {categorySkills.unlocked.map((skill) => (
-                  <div
-                    key={skill.id}
-                    className={`p-4 md:p-5 rounded-xl border-2 transition-all hover:scale-105 ${
-                      skill.today
-                        ? 'bg-gradient-to-br from-pink-900/50 to-purple-900/50 border-pink-500 shadow-lg shadow-pink-500/20'
-                        : 'bg-slate-800/50 border-green-500/30'
-                    }`}
-                  >
-                    <div className="flex items-start justify-between mb-2 md:mb-3">
-                      <h3 className="text-lg md:text-xl font-bold">{skill.name}</h3>
-                      {skill.today && (
-                        <span className="text-xs px-2 py-1 bg-pink-500 text-white rounded-full">
-                          NEW
-                        </span>
-                      )}
-                    </div>
-                    <p className="text-xs md:text-sm text-purple-300 mb-2 md:mb-3">
-                      Level {skill.level} • {skill.relatedProjects} 项目
-                    </p>
-                    <div className="flex gap-0.5">
-                      {Array.from({ length: 5 }).map((_, i) => (
-                        <span
-                          key={i}
-                          className={i < (skill.level || 0) ? 'text-pink-500' : 'text-slate-600'}
-                        >
-                          ★
-                        </span>
-                      ))}
-                    </div>
-                    {skill.lastPracticed && (
-                      <div className="text-xs text-purple-400 mt-2">
-                        最近: {skill.lastPracticed}
-                      </div>
-                    )}
-                  </div>
-                ))}
-
-                {/* 学习中 */}
-                {categorySkills.learning.map((skill) => (
-                  <div
-                    key={skill.id}
-                    className="p-4 md:p-5 rounded-xl border-2 border-yellow-500/30 bg-yellow-900/10 hover:border-yellow-500/50 transition-all hover:scale-105"
-                  >
-                    <div className="flex items-start justify-between mb-2 md:mb-3">
-                      <h3 className="text-lg md:text-xl font-bold">{skill.name}</h3>
-                      <span className="text-xs px-2 py-1 bg-yellow-500 text-black rounded-full">
-                        学习中
-                      </span>
-                    </div>
-                    <div className="mb-2 md:mb-3">
-                      <div className="flex justify-between text-xs md:text-sm mb-1">
-                        <span>进度</span>
-                        <span className="text-yellow-400 font-semibold">{skill.progress}%</span>
-                      </div>
-                      <div className="w-full bg-slate-700 rounded-full h-1.5 md:h-2">
-                        <div
-                          className="bg-yellow-500 h-1.5 md:h-2 rounded-full transition-all"
-                          style={{ width: `${skill.progress}%` }}
-                        ></div>
-                      </div>
-                    </div>
-                    {skill.lastPracticed && (
-                      <div className="text-xs text-purple-400">
-                        最近: {skill.lastPracticed}
-                      </div>
-                    )}
-                  </div>
-                ))}
-
-                {/* 计划中 */}
-                {categorySkills.planned.map((skill) => (
-                  <div
-                    key={skill.id}
-                    className="p-4 md:p-5 rounded-xl border-2 border-purple-500/20 bg-slate-900/30 opacity-60"
-                  >
-                    <h3 className="text-lg md:text-xl font-bold mb-2 text-purple-400">{skill.name}</h3>
-                    <div className="text-xs md:text-sm text-purple-400">
-                      计划: {skill.plannedFor}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
             </ScrollReveal>
           );
         })}
-
-        {/* 图例 */}
-        <div className="mt-8 md:mt-12 p-4 md:p-6 bg-slate-800/30 rounded-xl md:rounded-2xl border border-purple-500/20">
-          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">图例</h3>
-          <div className="flex flex-wrap gap-4 md:gap-6 text-xs md:text-sm">
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5 md:w-6 md:h-6 border-2 border-green-500/30 bg-slate-800/50 rounded"></div>
-              <span className="text-purple-300">已解锁</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5 md:w-6 md:h-6 border-2 border-yellow-500/30 bg-yellow-900/10 rounded"></div>
-              <span className="text-purple-300">学习中</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5 md:w-6 md:h-6 border-2 border-pink-500 bg-pink-500/20 rounded"></div>
-              <span className="text-purple-300">今日新解锁</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-5 h-5 md:w-6 md:h-6 border-2 border-purple-500/20 bg-slate-900/30 rounded opacity-60"></div>
-              <span className="text-purple-300">计划中</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Footer */}
-        <div className="text-center mt-12 md:mt-16 text-purple-400">
-          <p className="text-sm md:text-base">持续解锁新技能... 🚀</p>
-        </div>
       </div>
     </main>
   );
