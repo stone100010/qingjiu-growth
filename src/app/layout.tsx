@@ -3,6 +3,8 @@ import { Quicksand, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import Navigation from '@/components/Navigation';
 import PageTransition from '@/components/PageTransition';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 // 有机圆润的字体选择
 const quicksand = Quicksand({
@@ -39,10 +41,12 @@ export default function RootLayout({
   return (
     <html lang="zh-CN">
       <body className={`${quicksand.variable} ${spaceGrotesk.variable} font-sans`}>
-        <Navigation />
-        <PageTransition>
-          {children}
-        </PageTransition>
+        <ThemeProvider>
+          <Navigation />
+          <PageTransition>
+            {children}
+          </PageTransition>
+        </ThemeProvider>
       </body>
     </html>
   );
