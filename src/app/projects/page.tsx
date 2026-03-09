@@ -1,23 +1,58 @@
-import { getProjects } from '@/mock';
-import ScrollReveal from '@/components/ScrollReveal';
+'use client'
+
+import { useEffect, useState } from 'react'
+import ScrollReveal from '@/components/ScrollReveal'
+
+interface Project {
+  id: string
+  title: string
+  description: string
+  status: string
+  techStack: string[]
+  progress: number
+  priority: string
+  category: string
+  startedAt: string
+  completedAt?: string
+  endDate?: string
+}
 
 export default function ProjectsPage() {
-  const projects = getProjects();
+  const [projects, setProjects] = useState<Project[]>([])
+  const [loading, setLoading] = useState(true)
 
-  const statusLabels = {
-    active: { label: '进行中', color: 'yellow' },
-    planning: { label: '规划中', color: 'gray' },
-    'on-hold': { label: '暂停', color: 'orange' },
-  };
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch('/api/projects')
+        const data = await res.json()
+        setProjects(data)
+      } catch (error) {
+        console.error('获取项目失败:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
 
-  const categoryLabels = {
-    web: { label: 'Web 应用', icon: '🌐' },
-    ai: { label: 'AI/ML', icon: '🤖' },
-    tool: { label: '工具', icon: '🔧' },
-  };
+  if (loading) {
+    return (
+      <main className="min-h-screen mesh-gradient organic-wave">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex items-center justify-center h-96">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
+              <p style={{color: '#94a89b'}}>加载中...</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    )
+  }
 
-  const activeProjects = projects.filter(p => p.status === 'active');
-  const planningProjects = projects.filter(p => p.status === 'planning');
+  const activeProjects = projects.filter(p => p.status === 'development')
+  const planningProjects = projects.filter(p => p.status === 'planning')
 
   return (
     <main className="min-h-screen mesh-gradient organic-wave" style={{background: 'radial-gradient(ellipse at top left, rgba(94, 129, 107, 0.2), transparent 50%), radial-gradient(ellipse at bottom right, rgba(56, 163, 165, 0.15), transparent 50%), linear-gradient(135deg, #0f231c, #1a4455)'}}>
@@ -45,20 +80,21 @@ export default function ProjectsPage() {
                   <div className="flex items-start justify-between mb-3 md:mb-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2 flex-wrap">
-                        <h3 className="text-lg md:text-xl font-bold" style={{fontFamily: 'var(--font-tech)'}}>{project.name}</h3>
+                        <h3 className="text-lg md:text-xl font-bold" style={{fontFamily: 'var(--font-tech)'}}>{project.title}</h3>
                         <span
                           className="px-2 md:px-3 py-1 rounded text-xs md:text-sm"
                           style={{
-                            background: project.status === 'active' ? 'rgba(94, 129, 107, 0.3)' : 'rgba(120, 94, 73, 0.3)',
-                            color: project.status === 'active' ? '#5e816b' : '#785e49'
+                            background: project.status === 'development' ? 'rgba(94, 129, 107, 0.3)' : 'rgba(120, 94, 73, 0.3)',
+                            color: project.status === 'development' ? '#5e816b' : '#785e49'
                           }}
                         >
-                          {statusLabels[project.status as keyof typeof statusLabels].label}
+                          {project.status === 'development' ? '进行中' : '规划中'}
                         </span>
                       </div>
                       <p className="text-xs md:text-sm mb-2" style={{color: '#94a89b'}}>{project.description}</p>
                       <div className="text-xs" style={{color: '#5e816b'}}>
-                        {project.startDate}
+                        {project.startedAt ? new Date(project.startedAt).toLocaleDateString('zh-CN') : '未定'}
+                        {project.endDate && ` → ${new Date(project.endDate).toLocaleDateString('zh-CN')}`}
                       </div>
                     </div>
                     <div className="ml-0 md:ml-4 text-center min-w-16">
@@ -105,20 +141,21 @@ export default function ProjectsPage() {
                   <div className="flex items-start justify-between mb-3 md:mb-4">
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-2 flex-wrap">
-                        <h3 className="text-lg md:text-xl font-bold" style={{fontFamily: 'var(--font-tech)'}}>{project.name}</h3>
+                        <h3 className="text-lg md:text-xl font-bold" style={{fontFamily: 'var(--font-tech)'}}>{project.title}</h3>
                         <span
                           className="px-2 md:px-3 py-1 rounded text-xs md:text-sm"
                           style={{
-                            background: project.status === 'active' ? 'rgba(94, 129, 107, 0.3)' : 'rgba(120, 94, 73, 0.3)',
-                            color: project.status === 'active' ? '#5e816b' : '#785e49'
+                            background: project.status === 'development' ? 'rgba(94, 129, 107, 0.3)' : 'rgba(120, 94, 73, 0.3)',
+                            color: project.status === 'development' ? '#5e816b' : '#785e49'
                           }}
                         >
-                          {statusLabels[project.status as keyof typeof statusLabels].label}
+                          {project.status === 'development' ? '进行中' : '规划中'}
                         </span>
                       </div>
                       <p className="text-xs md:text-sm mb-2" style={{color: '#94a89b'}}>{project.description}</p>
                       <div className="text-xs" style={{color: '#5e816b'}}>
-                        {project.startDate}
+                        {project.startedAt ? new Date(project.startedAt).toLocaleDateString('zh-CN') : '未定'}
+                        {project.endDate && ` → ${new Date(project.endDate).toLocaleDateString('zh-CN')}`}
                       </div>
                     </div>
                     <div className="ml-0 md:ml-4 text-center min-w-16">
@@ -152,5 +189,5 @@ export default function ProjectsPage() {
         </ScrollReveal>
       </div>
     </main>
-  );
+  )
 }
