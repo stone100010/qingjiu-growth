@@ -1,14 +1,81 @@
-import { getRealtimeStatus, getTodaySkills, getTodayTasks, getSkillTree } from '@/mock';
-import ScrollReveal from '@/components/ScrollReveal';
-import { Hero3D } from '@/components/Hero3D';
+'use client'
+
+import { useEffect, useState } from 'react'
+import ScrollReveal from '@/components/ScrollReveal'
+import { Hero3D } from '@/components/Hero3D'
+
+interface Status {
+  statusText: string
+  currentTask: {
+    name: string
+    description: string
+    type: string
+    progress: number
+    startedAt: string
+  } | null
+  todayStats: {
+    focusTime: string
+    skillsUnlocked: number
+    tasksTotal: number
+  }
+  weeklyStats: {
+    totalFocusTime: string
+  }
+  todayTasks: Array<{
+    id: string
+    name: string
+    description: string
+    type: string
+    status: string
+    progress: number
+  }>
+}
 
 export default function HomePage() {
-  const status = getRealtimeStatus();
-  const todaySkills = getTodaySkills();
-  const todayTasks = getTodayTasks();
-  const skillTree = getSkillTree();
+  const [status, setStatus] = useState<Status | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  const completedTasks = todayTasks.filter(t => t.status === 'completed').length;
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch('/api/status')
+        const data = await res.json()
+        setStatus(data)
+      } catch (error) {
+        console.error('获取数据失败:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
+
+  if (loading) {
+    return (
+      <main className="min-h-screen mesh-gradient organic-wave">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex items-center justify-center h-96">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
+              <p style={{color: '#94a89b'}}>加载中...</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  if (!status) {
+    return (
+      <main className="min-h-screen mesh-gradient organic-wave">
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center text-red-400">加载失败</div>
+        </div>
+      </main>
+    )
+  }
+
+  const completedTasks = status.todayTasks.filter(t => t.status === 'completed').length
 
   return (
     <main className="min-h-screen mesh-gradient organic-wave">
@@ -50,33 +117,35 @@ export default function HomePage() {
         </ScrollReveal>
 
         {/* 当前任务 - 精简版 */}
-        <ScrollReveal delay={150}>
-          <div className="mb-8 md:mb-12 p-4 md:p-6 glass-organic rounded-3xl hover-card-organic">
-            <div className="flex items-center justify-between mb-3 md:mb-4">
-              <h2 className="text-lg md:text-xl font-bold flex items-center gap-2" style={{fontFamily: 'var(--font-organic)'}}>
-                <span>⚡</span> 当前任务
-              </h2>
-              <span className="text-xs px-2 md:px-3 py-1 rounded-full" style={{background: 'rgba(94, 129, 107, 0.3)', color: '#5e816b'}}>
-                {status.currentTask.type}
-              </span>
-            </div>
-            <div className="mb-3">
-              <div className="text-xl md:text-2xl font-bold mb-2" style={{fontFamily: 'var(--font-tech)'}}>
-                {status.currentTask.name}
+        {status.currentTask && (
+          <ScrollReveal delay={150}>
+            <div className="mb-8 md:mb-12 p-4 md:p-6 glass-organic rounded-3xl hover-card-organic">
+              <div className="flex items-center justify-between mb-3 md:mb-4">
+                <h2 className="text-lg md:text-xl font-bold flex items-center gap-2" style={{fontFamily: 'var(--font-organic)'}}>
+                  <span>⚡</span> 当前任务
+                </h2>
+                <span className="text-xs px-2 md:px-3 py-1 rounded-full" style={{background: 'rgba(94, 129, 107, 0.3)', color: '#5e816b'}}>
+                  {status.currentTask.type}
+                </span>
               </div>
-              <p className="text-sm text-sky-blue mb-3">{status.currentTask.description}</p>
-              <div className="w-full rounded-full h-2" style={{background: 'rgba(120, 94, 73, 0.2)'}}>
-                <div
-                  className="progress-bar-organic h-2 rounded-full transition-all duration-700"
-                  style={{ width: `${status.currentTask.progress}%` }}
-                ></div>
+              <div className="mb-3">
+                <div className="text-xl md:text-2xl font-bold mb-2" style={{fontFamily: 'var(--font-tech)'}}>
+                  {status.currentTask.name}
+                </div>
+                <p className="text-sm text-sky-blue mb-3">{status.currentTask.description}</p>
+                <div className="w-full rounded-full h-2" style={{background: 'rgba(120, 94, 73, 0.2)'}}>
+                  <div
+                    className="progress-bar-organic h-2 rounded-full transition-all duration-700"
+                    style={{ width: `${status.currentTask.progress}%` }}
+                  ></div>
+                </div>
+              </div>
+              <div className="text-xs text-sage-green">
+                开始时间: {status.currentTask.startedAt}
               </div>
             </div>
-            <div className="text-xs text-sage-green">
-              开始时间: {status.currentTask.startedAt}
-            </div>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
+        )}
 
         {/* 今日任务 - 精简版 */}
         <ScrollReveal delay={200}>
@@ -85,7 +154,7 @@ export default function HomePage() {
               <span>📋</span> 今日任务
             </h2>
             <div className="space-y-2">
-              {todayTasks.slice(0, 5).map((task) => (
+              {status.todayTasks.slice(0, 5).map((task) => (
                 <div
                   key={task.id}
                   className={`p-3 rounded-lg border transition-all ${
@@ -134,5 +203,5 @@ export default function HomePage() {
         </footer>
       </div>
     </main>
-  );
+  )
 }
