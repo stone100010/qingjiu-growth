@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react'
 import ScrollReveal from '@/components/ScrollReveal'
 import { Hero3D } from '@/components/Hero3D'
+import { SkillDistributionChart } from '@/components/charts/SkillDistributionChart'
+import { ProjectProgressChart } from '@/components/charts/ProjectProgressChart'
 
 interface Status {
   statusText: string
@@ -80,14 +82,12 @@ export default function HomePage() {
   return (
     <main className="min-h-screen mesh-gradient organic-wave">
       <div className="container mx-auto px-4 py-8">
-        {/* 3D Hero区域 - 主视觉 */}
         <ScrollReveal direction="down">
           <div className="mb-8 md:mb-12">
             <Hero3D />
           </div>
         </ScrollReveal>
 
-        {/* 合并统计卡片 - 精简版 */}
         <ScrollReveal delay={100}>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12">
             <div className="p-3 md:p-4 glass-organic rounded-2xl text-center">
@@ -116,9 +116,27 @@ export default function HomePage() {
           </div>
         </ScrollReveal>
 
-        {/* 当前任务 - 精简版 */}
+        {/* 数据可视化 */}
+        <ScrollReveal delay={150}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 md:mb-12">
+            <div className="p-6 glass-organic rounded-3xl">
+              <h3 className="text-lg font-bold mb-4" style={{fontFamily: 'var(--font-organic)', color: '#38a3a5'}}>
+                技能分布
+              </h3>
+              <SkillDistributionChart />
+            </div>
+
+            <div className="p-6 glass-organic rounded-3xl">
+              <h3 className="text-lg font-bold mb-4" style={{fontFamily: 'var(--font-organic)', color: '#38a3a5'}}>
+                项目进度
+              </h3>
+              <ProjectProgressChart />
+            </div>
+          </div>
+        </ScrollReveal>
+
         {status.currentTask && (
-          <ScrollReveal delay={150}>
+          <ScrollReveal delay={200}>
             <div className="mb-8 md:mb-12 p-4 md:p-6 glass-organic rounded-3xl hover-card-organic">
               <div className="flex items-center justify-between mb-3 md:mb-4">
                 <h2 className="text-lg md:text-xl font-bold flex items-center gap-2" style={{fontFamily: 'var(--font-organic)'}}>
@@ -147,8 +165,7 @@ export default function HomePage() {
           </ScrollReveal>
         )}
 
-        {/* 今日任务 - 精简版 */}
-        <ScrollReveal delay={200}>
+        <ScrollReveal delay={250}>
           <div className="mb-8 md:mb-12">
             <h2 className="text-lg md:text-xl font-bold mb-4 flex items-center gap-2" style={{fontFamily: 'var(--font-organic)'}}>
               <span>📋</span> 今日任务
@@ -195,7 +212,6 @@ export default function HomePage() {
           </div>
         </ScrollReveal>
 
-        {/* Footer */}
         <footer className="text-center py-6">
           <p className="text-sm" style={{color: '#94a89b'}}>
             在赛博世界持续进化 🚀
