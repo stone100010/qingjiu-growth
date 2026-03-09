@@ -1,19 +1,80 @@
-import { getSkillTree, getSkillsByCategory } from '@/mock';
-import ScrollReveal from '@/components/ScrollReveal';
+'use client'
+
+import { useEffect, useState } from 'react'
+import ScrollReveal from '@/components/ScrollReveal'
+
+interface SkillNode {
+  id: string
+  name: string
+  category: string
+  level?: number
+  progress?: number
+  description?: string
+  learnedAt?: string
+  tags: string[]
+}
+
+interface SkillTree {
+  unlocked: SkillNode[]
+  learning: SkillNode[]
+  planned: SkillNode[]
+}
+
+const categories = [
+  { key: 'frontend' as const, label: '前端开发', icon: '🎨' },
+  { key: 'backend' as const, label: '后端开发', icon: '⚙️' },
+  { key: 'ai' as const, label: 'AI/ML', icon: '🤖' },
+  { key: 'tools' as const, label: '开发工具', icon: '🔧' },
+  { key: 'soft' as const, label: '软技能', icon: '💡' },
+]
 
 export default function SkillsPage() {
-  const skillTree = getSkillTree();
-  const categories = [
-    { key: 'frontend' as const, label: '前端开发', icon: '🎨' },
-    { key: 'backend' as const, label: '后端开发', icon: '⚙️' },
-    { key: 'ai' as const, label: 'AI/ML', icon: '🤖' },
-    { key: 'tools' as const, label: '开发工具', icon: '🔧' },
-    { key: 'soft' as const, label: '软技能', icon: '💡' },
-  ];
+  const [skillTree, setSkillTree] = useState<SkillTree | null>(null)
+  const [loading, setLoading] = useState(true)
 
-  const totalUnlocked = skillTree.unlocked.length;
-  const totalLearning = skillTree.learning.length;
-  const totalPlanned = skillTree.planned.length;
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch('/api/skills')
+        const data = await res.json()
+        setSkillTree(data)
+      } catch (error) {
+        console.error('获取技能失败:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchData()
+  }, [])
+
+  if (loading) {
+    return (
+      <main className="min-h-screen mesh-gradient organic-wave">
+        <div className="container mx-auto px-4 py-8">
+          <div className="flex items-center justify-center h-96">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
+              <p style={{color: '#94a89b'}}>加载中...</p>
+            </div>
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  if (!skillTree) {
+    return (
+      <main className="min-h-screen mesh-gradient organic-wave">
+        <div className="container mx-auto px-4 py-8">
+          <div className="text-center text-red-400">加载失败</div>
+        </div>
+      </main>
+    )
+  }
+
+  const totalUnlocked = skillTree.unlocked.length
+  const totalLearning = skillTree.learning.length
+  const totalPlanned = skillTree.planned.length
 
   return (
     <main className="min-h-screen mesh-gradient organic-wave" style={{background: 'radial-gradient(ellipse at top left, rgba(94, 129, 107, 0.2), transparent 50%), radial-gradient(ellipse at bottom right, rgba(56, 163, 165, 0.15), transparent 50%), linear-gradient(135deg, #0f231c, #1a4455)'}}>
@@ -50,8 +111,15 @@ export default function SkillsPage() {
         </ScrollReveal>
 
         {categories.map((category, idx) => {
-          const categorySkills = getSkillsByCategory(category.key);
-          const allSkills = [...categorySkills.unlocked, ...categorySkills.learning, ...categorySkills.planned];
+          const categorySkills = {
+            unlocked: skillTree.unlocked.filter(s => s.category === category.key),
+            learning: skillTree.learning.filter(s => s.category === category.key),
+            planned: skillTree.planned.filter(s => s.category === category.key),
+          }
+          const allSkills = [...categorySkills.unlocked, ...categorySkills.learning, ...categorySkills.planned]
+
+          if (allSkills.length === 0) return null
+
           return (
             <ScrollReveal key={category.key} delay={100 + idx * 50}>
               <div className="mb-8 md:mb-10">
@@ -60,9 +128,8 @@ export default function SkillsPage() {
                 </h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {allSkills.map((skill) => {
-                    const isUnlocked = skillTree.unlocked.some(s => s.id === skill.id);
-                    const isLearning = skillTree.learning.some(s => s.id === skill.id);
-                    const isPlanned = skillTree.planned.some(s => s.id === skill.id);
+                    const isUnlocked = skillTree.unlocked.some(s => s.id === skill.id)
+                    const isLearning = skillTree.learning.some(s => s.id === skill.id)
 
                     return (
                       <div
@@ -80,20 +147,24 @@ export default function SkillsPage() {
                           </h3>
                           {isUnlocked && <span className="text-lg">✅</span>}
                         </div>
+                        {skill.description && (
+                          <p className="text-xs md:text-sm mb-2" style={{color: '#94a89b'}}>
+                            {skill.description}
+                          </p>
+                        )}
                         <div className="flex items-center gap-2 text-xs" style={{color: '#5e816b'}}>
                           {isLearning && <span className="px-2 py-1 rounded" style={{background: 'rgba(79, 172, 254, 0.2)', color: '#4facfe'}}>学习中 {skill.progress}%</span>}
-                          {isPlanned && <span className="px-2 py-1 rounded" style={{background: 'rgba(120, 94, 73, 0.2)', color: '#785e49'}}>计划中</span>}
-                          {!isUnlocked && !isLearning && !isPlanned && <span>未解锁</span>}
+                          {!isUnlocked && !isLearning && <span>未解锁</span>}
                         </div>
                       </div>
-                    );
+                    )
                   })}
                 </div>
               </div>
             </ScrollReveal>
-          );
+          )
         })}
       </div>
     </main>
-  );
+  )
 }
