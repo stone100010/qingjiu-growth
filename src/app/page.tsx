@@ -1,5 +1,6 @@
 import { getRealtimeStatus, getTodaySkills, getTodayTasks, getSkillTree } from '@/mock';
 import ScrollReveal from '@/components/ScrollReveal';
+import { Hero3D } from '@/components/Hero3D';
 
 export default function HomePage() {
   const status = getRealtimeStatus();
@@ -28,6 +29,13 @@ export default function HomePage() {
                 <span>本周: {status.weeklyStats.totalFocusTime}</span>
               </div>
             </div>
+          </div>
+        </ScrollReveal>
+
+        {/* 3D Hero区域 */}
+        <ScrollReveal delay={50}>
+          <div className="mb-8 md:mb-12">
+            <Hero3D />
           </div>
         </ScrollReveal>
 

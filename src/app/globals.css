@@ -43,6 +43,23 @@ body {
   }
 }
 
+/* Spotlight动画 */
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-spotlight {
+  animation: spotlight 10s ease-in-out infinite;
+}
+
 /* 自定义动画 */
 @keyframes pulse-glow {
   0%, 100% {
