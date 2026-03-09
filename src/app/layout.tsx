@@ -1,10 +1,23 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+import { Quicksand, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import Navigation from '@/components/Navigation';
 import PageTransition from '@/components/PageTransition';
 
-const inter = Inter({ subsets: ['latin'] });
+// 有机圆润的字体选择
+const quicksand = Quicksand({
+  subsets: ['latin'],
+  variable: '--font-organic',
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+});
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ['latin'],
+  variable: '--font-tech',
+  weight: ['400', '500', '600', '700'],
+  display: 'swap',
+});
 
 export const metadata: Metadata = {
   title: '清玖状态面板 🌸',
@@ -25,7 +38,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body className={inter.className}>
+      <body className={`${quicksand.variable} ${spaceGrotesk.variable} font-sans`}>
         <Navigation />
         <PageTransition>
           {children}

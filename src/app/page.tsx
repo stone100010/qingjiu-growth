@@ -11,62 +11,67 @@ export default function HomePage() {
   const pendingTasks = todayTasks.filter(t => t.status === 'pending' || t.status === 'in-progress').length;
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 text-white">
+    <main className="min-h-screen mesh-gradient organic-wave">
       <div className="container mx-auto px-4 py-8">
-        {/* 顶部状态栏 */}
+        {/* 顶部状态栏 - 有机风格 */}
         <ScrollReveal direction="down">
-          <div className="mb-6 md:mb-8 p-3 md:p-4 bg-slate-800/50 backdrop-blur-sm rounded-xl md:rounded-2xl border border-purple-500/30 hover-glow">
+          <div className="mb-6 md:mb-8 p-3 md:p-4 glass-organic rounded-3xl organic-glow">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 md:gap-4">
               <div className="flex items-center gap-2 md:gap-3">
-                <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse"></div>
-                <span className="text-base md:text-lg font-semibold">清玖状态: {status.statusText}</span>
+                <div className="w-3 h-3 rounded-full bg-sage-green animate-pulse"></div>
+                <span className="text-base md:text-lg font-semibold" style={{fontFamily: 'var(--font-organic)'}}>
+                  清玖状态: {status.statusText}
+                </span>
               </div>
-              <div className="flex gap-4 md:gap-6 text-xs md:text-sm">
-                <span className="text-purple-300">今日: {status.todayStats.focusTime}</span>
-                <span className="text-purple-300">本周: {status.weeklyStats.totalFocusTime}</span>
+              <div className="flex gap-4 md:gap-6 text-xs md:text-sm text-sky-blue">
+                <span>今日: {status.todayStats.focusTime}</span>
+                <span>本周: {status.weeklyStats.totalFocusTime}</span>
               </div>
             </div>
           </div>
         </ScrollReveal>
 
-        {/* Hero区域 */}
-        <div className="text-center mb-8 md:mb-12">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3 md:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
+        {/* Hero区域 - 柔和渐变 */}
+        <div className="text-center mb-8 md:mb-12 relative">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-forest-green/10 rounded-full blur-3xl"></div>
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-3 md:mb-4 bg-clip-text text-transparent bg-gradient-to-r from-forest-green via-sky-blue to-tech-cyan animate-gradient" style={{fontFamily: 'var(--font-tech)'}}>
             🌸 清玖状态面板
           </h1>
-          <p className="text-lg md:text-xl text-purple-300">
-            赛博世界实时状态监控面板
+          <p className="text-lg md:text-xl text-sage-green">
+            有机科技 · 自然流动
           </p>
         </div>
 
-        {/* 实时任务卡片 */}
+        {/* 实时任务卡片 - 有机渐变 */}
         <ScrollReveal delay={100}>
-          <div className="mb-8 md:mb-12 p-4 md:p-6 bg-gradient-to-br from-purple-900/50 to-pink-900/30 rounded-xl md:rounded-2xl border border-purple-500/30 backdrop-blur-sm hover-glow">
+          <div className="mb-8 md:mb-12 p-4 md:p-6 glass-organic rounded-3xl organic-shape hover-card-organic">
           <div className="flex items-center justify-between mb-3 md:mb-4">
-            <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
+            <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2" style={{fontFamily: 'var(--font-organic)'}}>
               <span>⚡</span> 当前任务
             </h2>
-            <span className="text-xs px-2 md:px-3 py-1 bg-purple-500/30 rounded-full">
+            <span className="text-xs px-2 md:px-3 py-1 bg-forest-green/30 rounded-full text-sage-green">
               {status.currentTask.type}
             </span>
           </div>
           <div className="mb-3 md:mb-4">
-            <div className="text-2xl md:text-3xl font-bold mb-2">{status.currentTask.name}</div>
-            <p className="text-sm md:text-base text-purple-300">{status.currentTask.description}</p>
+            <div className="text-2xl md:text-3xl font-bold mb-2" style={{fontFamily: 'var(--font-tech)'}}>
+              {status.currentTask.name}
+            </div>
+            <p className="text-sm md:text-base text-sky-blue">{status.currentTask.description}</p>
           </div>
           <div className="mb-2">
             <div className="flex justify-between text-xs md:text-sm mb-1">
               <span>进度</span>
-              <span className="text-pink-400 font-semibold">{status.currentTask.progress}%</span>
+              <span className="text-tech-cyan font-semibold">{status.currentTask.progress}%</span>
             </div>
-            <div className="w-full bg-slate-700 rounded-full h-2 md:h-3">
+            <div className="w-full bg-earth-brown/20 rounded-full h-2 md:h-3 overflow-hidden">
               <div
-                className="bg-gradient-to-r from-pink-500 to-purple-500 h-2 md:h-3 rounded-full transition-all duration-500"
+                className="progress-bar-organic h-2 md:h-3 rounded-full transition-all duration-700"
                 style={{ width: `${status.currentTask.progress}%` }}
               ></div>
             </div>
           </div>
-          <div className="text-xs text-purple-400 mt-2">
+          <div className="text-xs text-sage-green mt-2">
             开始时间: {status.currentTask.startedAt}
           </div>
           </div>

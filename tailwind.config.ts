@@ -9,18 +9,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: {
-          50: '#fdf2f8',
-          100: '#fce7f3',
-          200: '#fbcfe8',
-          300: '#f9a8d4',
-          400: '#f472b6',
-          500: '#ec4899',
-          600: '#db2777',
-          700: '#be185d',
-          800: '#9d174d',
-          900: '#831843',
+        // 有机科技配色系统 - 自然色彩
+        'forest-green': {
+          DEFAULT: '#22573c',
+          light: '#5e816b',
         },
+        'sage-green': '#5e816b',
+        'sky-blue': '#38a3a5',
+        'azure': '#4facfe',
+        'earth-brown': '#785e49',
+        'sand-beige': '#d9d0c3',
+        // 科技荧光点缀
+        'tech-cyan': '#22d3ee',
+        'tech-purple': '#a855f7',
+      },
+      fontFamily: {
+        organic: ['var(--font-organic)', 'sans-serif'],
+        tech: ['var(--font-tech)', 'sans-serif'],
+      },
+      borderRadius: {
+        'organic': '60% 40% 30% 70% / 60% 30% 70% 40%',
       },
     },
   },
