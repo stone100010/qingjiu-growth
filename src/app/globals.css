@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  /* Design Tokens - 有机科技配色系统 */
+  /* Design Tokens - 有机科技配色系统 + 清玖粉色 */
   --forest-green: rgb(34, 87, 60);        /* 森林绿 */
   --sage-green: rgb(94, 129, 107);        /* 鼠尾草绿 */
   --sky-blue: rgb(56, 163, 165);          /* 天空蓝 */
@@ -11,6 +11,12 @@
 
   --earth-brown: rgb(120, 94, 73);        /* 大地棕 */
   --sand-beige: rgb(217, 208, 195);       /* 沙漠米 */
+
+  /* 清玖粉色系主题 */
+  --qingjiu-pink: rgb(255, 181, 197);     /* 清玖粉 */
+  --sakura-pink: rgb(255, 218, 224);      /* 樱花粉 */
+  --rose-quartz: rgb(255, 181, 186);      /* 玫瑰石英 */
+  --peach-blossom: rgb(255, 208, 213);    /* 桃花 */
 
   --tech-cyan: rgb(34, 211, 238);         /* 科技青（荧光） */
   --tech-purple: rgb(168, 85, 247);        /* 科技紫（电光） */
@@ -21,16 +27,18 @@
   --text-nature: rgb(232, 245, 233);      /* 自然白 */
   --text-earth: rgb(148, 126, 108);       /* 大地灰 */
 
-  /* 渐变mesh - 自然到科技 */
+  /* 渐变mesh - 自然到科技到粉色 */
   --gradient-nature-start: var(--bg-forest-deep);
   --gradient-nature-end: rgb(26, 68, 85);  /* 深青 */
   --gradient-tech: rgba(34, 211, 238, 0.15);
+  --gradient-pink: rgba(255, 181, 197, 0.2);
 }
 
 body {
   color: var(--text-nature);
   background:
-    radial-gradient(ellipse at top left, var(--gradient-tech), transparent 50%),
+    radial-gradient(ellipse at top left, var(--gradient-pink), transparent 50%),
+    radial-gradient(ellipse at top right, var(--gradient-tech), transparent 50%),
     radial-gradient(ellipse at bottom right, rgba(168, 85, 247, 0.1), transparent 50%),
     linear-gradient(135deg, var(--gradient-nature-start), var(--gradient-nature-end));
   min-height: 100vh;
@@ -82,9 +90,9 @@ body {
   border: 1px solid rgba(168, 85, 247, 0.3);
 }
 
-/* 有机柔和光晕 - 自然绿色 */
+/* 有机柔和光晕 - 粉色系 */
 .organic-glow {
-  box-shadow: 0 4px 20px rgba(34, 87, 60, 0.3),
+  box-shadow: 0 4px 20px rgba(255, 181, 197, 0.3),
               0 8px 40px rgba(94, 129, 107, 0.2);
 }
 
@@ -95,8 +103,8 @@ body {
 
 /* 柔和文字光晕 */
 .organic-text-glow {
-  text-shadow: 0 2px 10px rgba(94, 129, 107, 0.5),
-               0 4px 20px rgba(34, 87, 60, 0.3);
+  text-shadow: 0 2px 10px rgba(255, 181, 197, 0.5),
+               0 4px 20px rgba(94, 129, 107, 0.3);
 }
 
 /* 科技荧光点缀（少量使用） */
@@ -105,7 +113,7 @@ body {
               0 0 30px rgba(34, 211, 238, 0.2);
 }
 
-/* 有机波浪进度条 */
+/* 有机波浪进度条 - 粉色渐变 */
 @keyframes organic-flow {
   0%, 100% {
     background-position: 0% 50%;
@@ -118,7 +126,7 @@ body {
 .progress-bar-organic {
   background: linear-gradient(
     90deg,
-    rgb(34, 87, 60) 0%,
+    rgb(255, 181, 197) 0%,
     rgb(56, 163, 165) 50%,
     rgb(94, 129, 107) 100%
   );
@@ -133,7 +141,7 @@ body {
 
 .hover-card-organic:hover {
   transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 60px rgba(34, 87, 60, 0.4),
+  box-shadow: 0 20px 60px rgba(255, 181, 197, 0.4),
               0 30px 80px rgba(56, 163, 165, 0.2);
 }
 
@@ -143,7 +151,7 @@ body {
 }
 
 .hover-organic-glow:hover {
-  box-shadow: 0 0 40px rgba(94, 129, 107, 0.4),
+  box-shadow: 0 0 40px rgba(255, 181, 197, 0.4),
               0 0 80px rgba(56, 163, 165, 0.2);
 }
 
@@ -162,7 +170,7 @@ body {
   animation: gradient-shift 3s ease infinite;
 }
 
-/* 滚动条样式 - 自然绿色 */
+/* 滚动条样式 - 粉色系 */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -173,7 +181,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(94, 129, 107, 0.5);
+  background: rgba(255, 181, 197, 0.5);
   border-radius: 4px;
 }
 
@@ -189,9 +197,9 @@ html {
 /* ===== 渐变Mesh背景（有机流动） ===== */
 .mesh-gradient {
   background:
-    radial-gradient(at 40% 20%, rgba(94, 129, 107, 0.3) 0px, transparent 50%),
+    radial-gradient(at 40% 20%, rgba(255, 181, 197, 0.3) 0px, transparent 50%),
     radial-gradient(at 80% 0%, rgba(56, 163, 165, 0.2) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, rgba(34, 87, 60, 0.2) 0px, transparent 50%),
+    radial-gradient(at 0% 50%, rgba(94, 129, 107, 0.2) 0px, transparent 50%),
     radial-gradient(at 80% 50%, rgba(120, 94, 73, 0.15) 0px, transparent 50%),
     radial-gradient(at 0% 100%, rgba(79, 172, 254, 0.2) 0px, transparent 50%),
     radial-gradient(at 80% 100%, rgba(34, 211, 238, 0.15) 0px, transparent 50%);
@@ -219,7 +227,7 @@ html {
   left: 0;
   width: 200%;
   height: 100%;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath fill='rgba(94, 129, 107, 0.1)' d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25'/%3E%3Cpath fill='rgba(56, 163, 165, 0.1)' d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5'/%3E%3Cpath fill='rgba(34, 87, 60, 0.1)' d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' opacity='.75'/%3E%3C/svg%3E");
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath fill='rgba(255, 181, 197, 0.1)' d='M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z' opacity='.25'/%3E%3Cpath fill='rgba(56, 163, 165, 0.1)' d='M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z' opacity='.5'/%3E%3Cpath fill='rgba(94, 129, 107, 0.1)' d='M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z' opacity='.75'/%3E%3C/svg%3E");
   animation: wave-flow 20s linear infinite;
 }
 
@@ -254,12 +262,47 @@ html {
   background: rgba(232, 245, 233, 0.1);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(94, 129, 107, 0.2);
+  border: 1px solid rgba(255, 181, 197, 0.2);
 }
 
-/* 选择文字样式 */
+/* 浮动动画 */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* 闪烁动画 */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 181, 197, 0) 0%,
+    rgba(255, 181, 197, 0.3) 50%,
+    rgba(255, 181, 197, 0) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s linear infinite;
+}
+
+/* 选择文字样式 - 粉色 */
 ::selection {
-  background-color: rgba(236, 72, 153, 0.3);
+  background-color: rgba(255, 181, 197, 0.3);
   color: rgb(255, 255, 255);
 }
 
@@ -284,7 +327,7 @@ html {
   left: 0;
   width: 100%;
   height: 2px;
-  background: linear-gradient(90deg, rgb(236, 72, 153), rgb(168, 85, 247));
+  background: linear-gradient(90deg, rgb(255, 181, 197), rgb(56, 163, 165));
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.3s ease;
@@ -295,3 +338,14 @@ html {
   transform-origin: left;
 }
 
+/* 加载骨架屏 */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 181, 197, 0.1) 0%,
+    rgba(56, 163, 165, 0.2) 50%,
+    rgba(255, 181, 197, 0.1) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
