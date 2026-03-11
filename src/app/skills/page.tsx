@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import ScrollReveal from '@/components/ScrollReveal'
 import { SkillTreeCard } from '@/components/SkillTreeCard'
-import Navigation from '@/components/Navigation'
 import { SkeletonGrid } from '@/components/ui/skeleton'
 
 interface Skill {
