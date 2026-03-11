@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react'
 import ScrollReveal from '@/components/ScrollReveal'
 import { ProjectCard } from '@/components/ProjectCard'
-import Navigation from '@/components/Navigation'
 import { SkeletonCard } from '@/components/ui/skeleton'
 
 interface Project {
@@ -46,7 +45,6 @@ export default function ProjectsPage() {
 
   return (
     <main className="min-h-screen mesh-gradient organic-wave">
-      <Navigation />
 
       <div className="container mx-auto px-4 py-8">
         <ScrollReveal direction="down">
