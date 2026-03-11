@@ -46,8 +46,6 @@ export default function SkillsPage() {
 
   return (
     <main className="min-h-screen mesh-gradient organic-wave">
-      <Navigation />
-
       <div className="container mx-auto px-4 py-8">
         <ScrollReveal direction="down">
           <div className="mb-8">
