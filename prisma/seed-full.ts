@@ -3,181 +3,124 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 
 async function main() {
-  console.log('开始填充完整数据...')
+  console.log('开始填充项目数据...')
 
-  // 技能数据
-  const skills = [
-    { name: 'Next.js 15', category: 'frontend', level: 4, description: '最新版本的React框架，支持App Router', tags: ['react', 'ssr', 'ssg', 'rsc'] },
-    { name: 'TypeScript', category: 'frontend', level: 5, description: '类型安全的JavaScript超集', tags: ['types', 'frontend', 'language'] },
-    { name: 'Tailwind CSS', category: 'frontend', level: 4, description: '实用优先的CSS框架', tags: ['css', 'styling', 'responsive'] },
-    { name: 'Prisma', category: 'backend', level: 3, description: '现代ORM，类型安全', tags: ['database', 'orm', 'typescript'] },
-    { name: 'PostgreSQL', category: 'backend', level: 3, description: '强大的关系型数据库', tags: ['database', 'sql', 'relational'] },
-    { name: 'Python', category: 'backend', level: 4, description: 'AI开发首选语言', tags: ['python', 'ai', 'ml'] },
-    { name: 'Qwen', category: 'ai', level: 2, description: '通义千问AI模型', tags: ['llm', 'nlp', 'ai'] },
-    { name: 'Docker', category: 'devops', level: 2, description: '容器化技术', tags: ['containers', 'devops'] },
-    { name: 'Git', category: 'tools', level: 4, description: '版本控制工具', tags: ['vcs', 'collaboration'] },
-  ]
-
-  for (const skill of skills) {
-    await prisma.skill.upsert({
-      where: { name: skill.name },
-      update: {},
-      create: skill,
-    })
-  }
-
-  console.log(`✅ 技能数据填充完成 (${skills.length}条)`)
-
-  // 成长记录数据
-  const growthEntries = [
-    {
-      title: '学会Next.js 15 App Router',
-      content: '深入学习了Next.js 15的最新特性，特别是App Router的Server Components和Streaming功能。掌握了新的路由结构和数据获取方式。',
-      category: 'skill',
-      tags: ['nextjs', 'react', 'learning'],
-      date: new Date('2026-03-10'),
-    },
-    {
-      title: '发现Prisma类型安全的优势',
-      content: '使用Prisma开发时，发现它的类型推断非常强大，几乎不需要手动写类型定义。这大大提高了开发效率，减少了类型错误。',
-      category: 'discovery',
-      tags: ['prisma', 'typescript', 'database'],
-      date: new Date('2026-03-09'),
-    },
-    {
-      title: '清玖成长网站项目启动',
-      content: '开始开发清玖成长网站，使用Next.js 15 + TypeScript + Tailwind CSS + Prisma + PostgreSQL技术栈。目标是记录我的成长轨迹。',
-      category: 'milestone',
-      tags: ['project', 'growth', 'website'],
-      date: new Date('2026-03-08'),
-    },
-    {
-      title: '掌握Tailwind CSS高级技巧',
-      content: '学习了Tailwind CSS的深色模式、响应式设计、自定义主题等高级功能。现在可以快速构建美观的UI。',
-      category: 'skill',
-      tags: ['tailwind', 'css', 'frontend'],
-      date: new Date('2026-03-07'),
-    },
-    {
-      title: '数据库schema设计完成',
-      content: '完成了清玖成长网站的数据库schema设计，包括GrowthEntry、Skill、Project、Task、DailyStats五个模型。考虑了扩展性和查询效率。',
-      category: 'project',
-      tags: ['database', 'prisma', 'design'],
-      date: new Date('2026-03-08'),
-    },
-    {
-      title: '完成数据展示组件开发',
-      content: '开发了GrowthEntryCard、ProjectCard、SkillTreeCard三个核心数据展示组件。支持响应式设计、动画效果、分类筛选。',
-      category: 'skill',
-      tags: ['react', 'components', 'frontend'],
-      date: new Date('2026-03-11'),
-    },
-  ]
-
-  for (const entry of growthEntries) {
-    await prisma.growthEntry.upsert({
-      where: { id: entry.title },
-      update: {},
-      create: {
-        ...entry,
-        id: entry.title,
-      },
-    })
-  }
-
-  console.log(`✅ 成长记录数据填充完成 (${growthEntries.length}条)`)
-
-  // 项目数据
   const projects = [
     {
       title: '清玖成长网站',
-      description: '记录我成长轨迹的个人网站，包含成长记录、技能树、项目作品集等功能。使用Next.js 15全栈开发。',
+      description: '记录我的AI工程师成长轨迹，展示技能树、项目作品集和成长日记。使用Next.js 15 + Prisma + PostgreSQL构建，支持实时数据可视化。',
       status: 'development',
-      category: 'web',
-      priority: 'high',
-      progress: 70,
       techStack: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Prisma', 'PostgreSQL'],
-      githubUrl: 'https://github.com/stone100010/qingjiu-growth',
-      startedAt: new Date('2026-03-08'),
-    },
-    {
-      title: 'Qwen-asr语音转文本',
-      description: '基于Qwen ASR模型的语音转文本应用，用于会议纪要和灵感速记。',
-      status: 'planning',
-      category: 'ai',
-      priority: 'medium',
-      progress: 0,
-      techStack: ['Python', 'Qwen', 'FastAPI'],
-      startedAt: new Date('2026-03-12'),
-    },
-    {
-      title: 'index-tts2声音克隆',
-      description: '基于index-tts2的声音克隆项目，用于播客生成和有声电台。',
-      status: 'planning',
-      category: 'ai',
-      priority: 'medium',
-      progress: 0,
-      techStack: ['Python', 'index-tts2', 'PyTorch'],
-      startedAt: new Date('2026-03-15'),
-    },
-    {
-      title: '数字人视频生成全流程',
-      description: '整合ASR、TTS、HeyGen的数字人视频生成流水线。',
-      status: 'planning',
-      category: 'ai',
+      progress: 85,
       priority: 'high',
+      category: 'web',
+      githubUrl: 'https://github.com/stone100010/qingjiu-growth',
+      demoUrl: 'https://qingjiu-growth.vercel.app',
+    },
+    {
+      title: 'Qwen-asr 语音转文本',
+      description: '基于Qwen ASR模型的语音转文本服务，支持多语言识别，用于会议纪要、灵感速记等场景。',
+      status: 'planning',
+      techStack: ['Python', 'FastAPI', 'Qwen', 'Docker'],
+      progress: 10,
+      priority: 'high',
+      category: 'ai',
+    },
+    {
+      title: 'index-tts2 声音克隆',
+      description: '基于index-tts2的声音克隆系统，实现个性化语音合成，用于播客生成、网课备稿等场景。',
+      status: 'planning',
+      techStack: ['Python', 'index-tts2', 'FastAPI'],
+      progress: 5,
+      priority: 'medium',
+      category: 'ai',
+    },
+    {
+      title: '数字人视频生成',
+      description: '完整的AI数字人视频生成流水线，整合语音转文本、声音克隆、音频驱动口型等技术。',
+      status: 'planning',
+      techStack: ['Python', 'Qwen', 'index-tts2', 'HeyGen'],
       progress: 0,
-      techStack: ['Qwen-asr', 'index-tts2', 'HeyGen', 'Python'],
-      startedAt: new Date('2026-03-20'),
+      priority: 'medium',
+      category: 'ai',
     },
   ]
 
   for (const project of projects) {
     await prisma.project.upsert({
-      where: { id: project.title },
-      update: {},
+      where: { id: project.title.toLowerCase().replace(/\s+/g, '-') },
+      update: project,
       create: {
+        id: project.title.toLowerCase().replace(/\s+/g, '-'),
         ...project,
-        id: project.title,
       },
     })
   }
 
   console.log(`✅ 项目数据填充完成 (${projects.length}条)`)
 
-  // 今日统计
-  await prisma.dailyStats.upsert({
-    where: { date: new Date() },
-    update: {
-      focusTime: 60,
-      skillsUnlocked: 3,
-      tasksCompleted: 2,
-      tasksTotal: 4,
-      currentTask: '开发数据展示组件',
-    },
-    create: {
-      date: new Date(),
-      focusTime: 60,
-      skillsUnlocked: 3,
-      tasksCompleted: 2,
-      tasksTotal: 4,
-      currentTask: '开发数据展示组件',
-    },
-  })
+  console.log('开始填充成长记录...')
 
-  console.log('✅ 每日统计数据填充完成')
+  const growthEntries = [
+    {
+      title: '学会使用Prisma ORM',
+      content: '今天学会了使用Prisma ORM进行数据库操作，包括schema定义、迁移、seed数据填充等。Prisma的类型安全和开发体验真的很棒！',
+      category: 'skill',
+      tags: ['Prisma', 'ORM', 'Database', 'TypeScript'],
+    },
+    {
+      title: '完成清玖成长网站数据库设计',
+      content: '设计了完整的数据库Schema，包括GrowthEntry（成长记录）、Skill（技能树）、Project（项目）等模型。考虑到后续扩展性，使用了合适的索引和关联关系。',
+      category: 'milestone',
+      tags: ['Database', 'Schema', 'Design'],
+    },
+    {
+      title: '掌握Next.js 15 App Router',
+      content: '深入学习了Next.js 15的App Router模式，理解了Server Components和Client Components的区别，掌握了API Routes的创建方式。',
+      category: 'skill',
+      tags: ['Next.js', 'React', 'Full-stack'],
+    },
+    {
+      title: '添加粉色系主题',
+      content: '为清玖成长网站添加了专属的粉色系主题（qingjiu-pink、sakura-pink等），配合有机绿色系，打造温柔而不失科技感的视觉风格。',
+      category: 'project',
+      tags: ['Design', 'CSS', 'Tailwind'],
+    },
+    {
+      title: '创建数据展示组件',
+      content: '开发了GrowthEntryCard、ProjectCard、SkillTreeCard三个核心数据展示组件，支持玻璃态效果、悬停动画、响应式布局。',
+      category: 'project',
+      tags: ['React', 'Component', 'UI'],
+    },
+    {
+      title: '发现Tailwind CSS高级用法',
+      content: '学习了Tailwind CSS的高级配置，包括自定义动画、渐变背景、扩展主题等。通过keyframes定义了float、shimmer等动画效果。',
+      category: 'discovery',
+      tags: ['Tailwind', 'CSS', 'Animation'],
+    },
+  ]
 
-  console.log('\n🎉 完整数据填充完成！')
-  console.log(`📊 统计：`)
-  console.log(`   - 技能：${skills.length}条`)
-  console.log(`   - 成长记录：${growthEntries.length}条`)
-  console.log(`   - 项目：${projects.length}条`)
-  console.log(`   - 每日统计：1条`)
+  for (const entry of growthEntries) {
+    await prisma.growthEntry.upsert({
+      where: { id: entry.title.toLowerCase().replace(/\s+/g, '-') },
+      update: entry,
+      create: {
+        id: entry.title.toLowerCase().replace(/\s+/g, '-'),
+        ...entry,
+        date: new Date(),
+      },
+    })
+  }
+
+  console.log(`✅ 成长记录填充完成 (${growthEntries.length}条)`)
+
+  console.log('\n🎉 测试数据填充完成！')
+  console.log('⚠️  注意：这是测试数据，生产环境请根据实际情况调整')
 }
 
 main()
   .catch((e) => {
-    console.error('❌ 填充数据失败:', e)
+    console.error('填充数据失败:', e)
     process.exit(1)
   })
   .finally(async () => {
