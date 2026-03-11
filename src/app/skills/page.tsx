@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import { SkillTreeCard } from '@/components/SkillTreeCard'
 import { Navigation } from '@/components/Navigation'
+import { SkeletonGrid } from '@/components/ui/skeleton'
 
 interface Skill {
   id: string
@@ -90,12 +91,7 @@ export default function SkillsPage() {
 
         {/* 技能列表 */}
         {loading ? (
-          <div className="flex items-center justify-center h-64">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-              <p style={{ color: '#94a89b' }}>加载中...</p>
-            </div>
-          </div>
+          <SkeletonGrid count={6} />
         ) : Object.keys(skills).length === 0 ? (
           <div className="text-center py-12">
             <p className="text-sky-blue">暂无技能数据</p>

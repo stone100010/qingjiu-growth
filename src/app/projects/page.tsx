@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { ScrollReveal } from '@/components/ScrollReveal'
 import { ProjectCard } from '@/components/ProjectCard'
 import { Navigation } from '@/components/Navigation'
+import { SkeletonCard } from '@/components/ui/skeleton'
 
 interface Project {
   id: string
@@ -111,11 +112,10 @@ export default function ProjectsPage() {
 
         {/* 项目列表 */}
         {loading ? (
-          <div className="flex items-center justify-center h-64">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
-              <p style={{ color: '#94a89b' }}>加载中...</p>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <SkeletonCard key={i} delay={i * 100} />
+            ))}
           </div>
         ) : projects.length === 0 ? (
           <div className="text-center py-12">
