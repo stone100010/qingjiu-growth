@@ -10,6 +10,7 @@ export async function GET(request: Request) {
     const limit = parseInt(searchParams.get('limit') || '10')
     const category = searchParams.get('category')
     const tag = searchParams.get('tag')
+    const search = searchParams.get('search')
 
     const skip = (page - 1) * limit
 
@@ -21,6 +22,12 @@ export async function GET(request: Request) {
       where.tags = {
         has: tag
       }
+    }
+    if (search) {
+      where.OR = [
+        { title: { contains: search, mode: 'insensitive' } },
+        { content: { contains: search, mode: 'insensitive' } },
+      ]
     }
 
     const [entries, total] = await Promise.all([

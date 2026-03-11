@@ -5,6 +5,7 @@ import { ScrollReveal } from '@/components/ScrollReveal'
 import { GrowthEntryCard } from '@/components/GrowthEntryCard'
 import { Navigation } from '@/components/Navigation'
 import { SkeletonGrid } from '@/components/ui/skeleton'
+import { SearchBar } from '@/components/ui/search'
 
 interface GrowthEntry {
   id: string
@@ -21,13 +22,15 @@ export default function GrowthPage() {
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
   const [categoryFilter, setCategoryFilter] = useState<string>('all')
+  const [searchQuery, setSearchQuery] = useState<string>('')
 
   useEffect(() => {
     async function fetchEntries() {
       try {
         setLoading(true)
         const categoryParam = categoryFilter !== 'all' ? `&category=${categoryFilter}` : ''
-        const res = await fetch(`/api/growth?page=${page}&limit=12${categoryParam}`)
+        const searchParam = searchQuery ? `&search=${encodeURIComponent(searchQuery)}` : ''
+        const res = await fetch(`/api/growth?page=${page}&limit=12${categoryParam}${searchParam}`)
         const data = await res.json()
         setEntries(data.entries || [])
         setTotalPages(data.pagination?.totalPages || 1)
@@ -38,7 +41,7 @@ export default function GrowthPage() {
       }
     }
     fetchEntries()
-  }, [page, categoryFilter])
+  }, [page, categoryFilter, searchQuery])
 
   return (
     <main className="min-h-screen mesh-gradient organic-wave">
@@ -54,35 +57,45 @@ export default function GrowthPage() {
           </div>
         </ScrollReveal>
 
-        {/* 分类筛选 */}
+        {/* 搜索和筛选 */}
         <ScrollReveal delay={100}>
-          <div className="mb-6 flex flex-wrap gap-2">
-            {[
-              { value: 'all', label: '全部', emoji: '📚' },
-              { value: 'skill', label: '技能', emoji: '🔓' },
-              { value: 'discovery', label: '发现', emoji: '💡' },
-              { value: 'project', label: '项目', emoji: '🚀' },
-              { value: 'milestone', label: '里程碑', emoji: '🎯' },
-            ].map((filter) => (
-              <button
-                key={filter.value}
-                onClick={() => {
-                  setCategoryFilter(filter.value)
-                  setPage(1)
-                }}
-                className={`px-4 py-2 rounded-full transition-all ${
-                  categoryFilter === filter.value
-                    ? 'glass-organic border-2'
-                    : 'bg-white/5'
-                }`}
-                style={{
-                  borderColor: categoryFilter === filter.value ? 'rgba(94, 129, 107, 0.5)' : 'transparent'
-                }}
-              >
-                <span className="mr-1">{filter.emoji}</span>
-                {filter.label}
-              </button>
-            ))}
+          <div className="mb-6 space-y-4">
+            <SearchBar
+              placeholder="搜索成长记录..."
+              onSearch={(query) => {
+                setSearchQuery(query)
+                setPage(1)
+              }}
+            />
+
+            <div className="flex flex-wrap gap-2">
+              {[
+                { value: 'all', label: '全部', emoji: '📚' },
+                { value: 'skill', label: '技能', emoji: '🔓' },
+                { value: 'discovery', label: '发现', emoji: '💡' },
+                { value: 'project', label: '项目', emoji: '🚀' },
+                { value: 'milestone', label: '里程碑', emoji: '🎯' },
+              ].map((filter) => (
+                <button
+                  key={filter.value}
+                  onClick={() => {
+                    setCategoryFilter(filter.value)
+                    setPage(1)
+                  }}
+                  className={`px-4 py-2 rounded-full transition-all ${
+                    categoryFilter === filter.value
+                      ? 'glass-organic border-2'
+                      : 'bg-white/5'
+                  }`}
+                  style={{
+                    borderColor: categoryFilter === filter.value ? 'rgba(94, 129, 107, 0.5)' : 'transparent'
+                  }}
+                >
+                  <span className="mr-1">{filter.emoji}</span>
+                  {filter.label}
+                </button>
+              ))}
+            </div>
           </div>
         </ScrollReveal>
 
