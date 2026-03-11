@@ -1,202 +1,129 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import ScrollReveal from '@/components/ScrollReveal'
+import { ScrollReveal } from '@/components/ScrollReveal'
+import { SkillTreeCard } from '@/components/SkillTreeCard'
+import { Navigation } from '@/components/Navigation'
 
-interface SkillNode {
+interface Skill {
   id: string
   name: string
   category: string
-  level?: number
-  progress?: number
+  level: number
   description?: string
-  learnedAt?: string
   tags: string[]
 }
 
-interface SkillTree {
-  unlocked: SkillNode[]
-  learning: SkillNode[]
-  planned: SkillNode[]
-}
-
-const categories = [
-  { key: 'frontend' as const, label: '前端开发', icon: '🎨' },
-  { key: 'backend' as const, label: '后端开发', icon: '⚙️' },
-  { key: 'ai' as const, label: 'AI/ML', icon: '🤖' },
-  { key: 'tools' as const, label: '开发工具', icon: '🔧' },
-  { key: 'soft' as const, label: '软技能', icon: '💡' },
-]
-
 export default function SkillsPage() {
-  const [skillTree, setSkillTree] = useState<SkillTree | null>(null)
+  const [skills, setSkills] = useState<Record<string, Skill[]>>({})
   const [loading, setLoading] = useState(true)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [filterCategory, setFilterCategory] = useState<string>('all')
+  const [categoryFilter, setCategoryFilter] = useState<string>('all')
 
   useEffect(() => {
-    async function fetchData() {
+    async function fetchSkills() {
       try {
-        const res = await fetch('/api/skills')
+        setLoading(true)
+        const categoryParam = categoryFilter !== 'all' ? `?category=${categoryFilter}` : ''
+        const res = await fetch(`/api/skills${categoryParam}`)
         const data = await res.json()
-        setSkillTree(data)
+        setSkills(data.skills || {})
       } catch (error) {
         console.error('获取技能失败:', error)
       } finally {
         setLoading(false)
       }
     }
-    fetchData()
-  }, [])
+    fetchSkills()
+  }, [categoryFilter])
 
-  if (loading) {
-    return (
-      <main className="min-h-screen mesh-gradient organic-wave">
-        <div className="container mx-auto px-4 py-8">
-          <div className="flex items-center justify-center h-96">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-white mx-auto mb-4"></div>
-              <p style={{color: '#94a89b'}}>加载中...</p>
-            </div>
-          </div>
-        </div>
-      </main>
-    )
+  const categoryLabels: Record<string, { label: string; emoji: string }> = {
+    frontend: { label: '前端开发', emoji: '🎨' },
+    backend: { label: '后端开发', emoji: '⚙️' },
+    ai: { label: '人工智能', emoji: '🤖' },
+    tools: { label: '开发工具', emoji: '🔧' },
+    devops: { label: 'DevOps', emoji: '🚀' },
   }
-
-  if (!skillTree) {
-    return (
-      <main className="min-h-screen mesh-gradient organic-wave">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center text-red-400">加载失败</div>
-        </div>
-      </main>
-    )
-  }
-
-  const totalUnlocked = skillTree.unlocked.length
-  const totalLearning = skillTree.learning.length
-  const totalPlanned = skillTree.planned.length
 
   return (
-    <main className="min-h-screen mesh-gradient organic-wave" style={{background: 'radial-gradient(ellipse at top left, rgba(94, 129, 107, 0.2), transparent 50%), radial-gradient(ellipse at bottom right, rgba(56, 163, 165, 0.15), transparent 50%), linear-gradient(135deg, #0f231c, #1a4455)'}}>
+    <main className="min-h-screen mesh-gradient organic-wave">
+      <Navigation />
+
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-6 md:mb-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-3 md:mb-4" style={{fontFamily: 'var(--font-tech)', background: 'linear-gradient(to right, #5e816b, #38a3a5, #4facfe)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent'}}>
-            ⚡ 技能树
-          </h1>
-          <p style={{color: '#94a89b', fontSize: '1.125rem', lineHeight: '1.75rem'}}>
-            每日点亮的技能成长路径
-          </p>
-        </div>
-
-        <ScrollReveal>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
-            <div className="p-4 md:p-6 rounded-3xl glass-organic" style={{border: '1px solid rgba(94, 129, 107, 0.3)'}}>
-              <div className="text-3xl md:text-4xl mb-2 md:mb-3">✅</div>
-              <div className="text-2xl md:text-3xl font-bold mb-1 md:mb-2" style={{color: '#38a3a5'}}>{totalUnlocked}</div>
-              <div className="text-xs md:text-sm" style={{color: '#94a89b'}}>已解锁技能</div>
-            </div>
-
-            <div className="p-4 md:p-6 rounded-3xl glass-organic" style={{border: '1px solid rgba(79, 172, 254, 0.3)'}}>
-              <div className="text-3xl md:text-4xl mb-2 md:mb-3">📚</div>
-              <div className="text-2xl md:text-3xl font-bold mb-1 md:mb-2" style={{color: '#4facfe'}}>{totalLearning}</div>
-              <div className="text-xs md:text-sm" style={{color: '#94a89b'}}>学习中</div>
-            </div>
-
-            <div className="p-4 md:p-6 rounded-3xl glass-organic" style={{border: '1px solid rgba(120, 94, 73, 0.3)'}}>
-              <div className="text-3xl md:text-4xl mb-2 md:mb-3">📋</div>
-              <div className="text-2xl md:text-3xl font-bold mb-1 md:mb-2" style={{color: '#785e49'}}>{totalPlanned}</div>
-              <div className="text-xs md:text-sm" style={{color: '#94a89b'}}>计划中</div>
-            </div>
+        <ScrollReveal direction="down">
+          <div className="mb-8">
+            <h1 className="text-3xl md:text-4xl font-bold mb-2" style={{ fontFamily: 'var(--font-organic)' }}>
+              🔓 技能树
+            </h1>
+            <p className="text-sky-blue">我掌握的技能和正在学习的领域</p>
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={50}>
-          <div className="mb-6 md:mb-8 p-4 glass-organic rounded-2xl">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                placeholder="搜索技能..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 focus:outline-none focus:border-sky-500 text-white placeholder-gray-400"
-              />
-              <select
-                value={filterCategory}
-                onChange={(e) => setFilterCategory(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg bg-white/5 border border-white/10 focus:outline-none focus:border-sky-500 text-white"
+        {/* 分类筛选 */}
+        <ScrollReveal delay={100}>
+          <div className="mb-6 flex flex-wrap gap-2">
+            {[
+              { value: 'all', label: '全部', emoji: '🌲' },
+              { value: 'frontend', label: '前端', emoji: '🎨' },
+              { value: 'backend', label: '后端', emoji: '⚙️' },
+              { value: 'ai', label: 'AI', emoji: '🤖' },
+              { value: 'tools', label: '工具', emoji: '🔧' },
+              { value: 'devops', label: 'DevOps', emoji: '🚀' },
+            ].map((filter) => (
+              <button
+                key={filter.value}
+                onClick={() => setCategoryFilter(filter.value)}
+                className={`px-4 py-2 rounded-full transition-all ${
+                  categoryFilter === filter.value
+                    ? 'glass-organic border-2'
+                    : 'bg-white/5'
+                }`}
+                style={{
+                  borderColor: categoryFilter === filter.value ? 'rgba(94, 129, 107, 0.5)' : 'transparent'
+                }}
               >
-                <option value="all">全部分类</option>
-                {categories.map(cat => (
-                  <option key={cat.key} value={cat.key}>{cat.label}</option>
-                ))}
-              </select>
-            </div>
+                <span className="mr-1">{filter.emoji}</span>
+                {filter.label}
+              </button>
+            ))}
           </div>
         </ScrollReveal>
 
-        {categories.map((category, idx) => {
-          const categorySkills = {
-            unlocked: skillTree.unlocked.filter(s => s.category === category.key),
-            learning: skillTree.learning.filter(s => s.category === category.key),
-            planned: skillTree.planned.filter(s => s.category === category.key),
-          }
-          const allSkills = [...categorySkills.unlocked, ...categorySkills.learning, ...categorySkills.planned]
-
-          const filteredSkills = allSkills.filter(skill => {
-            const matchesSearch = skill.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                                 (skill.description && skill.description.toLowerCase().includes(searchTerm.toLowerCase()))
-            const matchesCategory = filterCategory === 'all' || skill.category === filterCategory
-            return matchesSearch && matchesCategory
-          })
-
-          if (filteredSkills.length === 0) return null
-
-          return (
-            <ScrollReveal key={category.key} delay={100 + idx * 50}>
-              <div className="mb-8 md:mb-10">
-                <h2 className="text-xl md:text-2xl font-bold mb-4 md:mb-6 flex items-center gap-2" style={{fontFamily: 'var(--font-organic)'}}>
-                  <span>{category.icon}</span> {category.label}
+        {/* 技能列表 */}
+        {loading ? (
+          <div className="flex items-center justify-center h-64">
+            <div className="text-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
+              <p style={{ color: '#94a89b' }}>加载中...</p>
+            </div>
+          </div>
+        ) : Object.keys(skills).length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-sky-blue">暂无技能数据</p>
+          </div>
+        ) : (
+          Object.entries(skills).map(([category, categorySkills], groupIndex) => (
+            <ScrollReveal key={category} delay={groupIndex * 100}>
+              <div className="mb-8">
+                <h2 className="text-xl font-bold mb-4 flex items-center gap-2" style={{ fontFamily: 'var(--font-organic)', color: '#38a3a5' }}>
+                  <span>{categoryLabels[category]?.emoji || '📁'}</span>
+                  {categoryLabels[category]?.label || category}
+                  <span className="text-sm px-2 py-0.5 rounded-full" style={{ background: 'rgba(94, 129, 107, 0.3)', color: '#5e816b' }}>
+                    {categorySkills.length}
+                  </span>
                 </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {filteredSkills.map((skill) => {
-                    const isUnlocked = skillTree.unlocked.some(s => s.id === skill.id)
-                    const isLearning = skillTree.learning.some(s => s.id === skill.id)
-
-                    return (
-                      <div
-                        key={skill.id}
-                        className={`p-3 md:p-4 rounded-2xl transition-all hover-card-organic ${
-                          isUnlocked ? 'glass-organic' : 'bg-white/5'
-                        }`}
-                        style={{
-                          border: isUnlocked ? '1px solid rgba(94, 129, 107, 0.3)' : '1px solid rgba(120, 94, 73, 0.2)'
-                        }}
-                      >
-                        <div className="flex items-start justify-between mb-2">
-                          <h3 className="text-base md:text-lg font-semibold" style={{fontFamily: 'var(--font-tech)', color: isUnlocked ? '#38a3a5' : '#94a89b'}}>
-                            {skill.name}
-                          </h3>
-                          {isUnlocked && <span className="text-lg">✅</span>}
-                        </div>
-                        {skill.description && (
-                          <p className="text-xs md:text-sm mb-2" style={{color: '#94a89b'}}>
-                            {skill.description}
-                          </p>
-                        )}
-                        <div className="flex items-center gap-2 text-xs" style={{color: '#5e816b'}}>
-                          {isLearning && <span className="px-2 py-1 rounded" style={{background: 'rgba(79, 172, 254, 0.2)', color: '#4facfe'}}>学习中 {skill.progress}%</span>}
-                          {!isUnlocked && !isLearning && <span>未解锁</span>}
-                        </div>
-                      </div>
-                    )
-                  })}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {categorySkills.map((skill, index) => (
+                    <SkillTreeCard
+                      key={skill.id}
+                      skill={skill}
+                      delay={index * 50}
+                    />
+                  ))}
                 </div>
               </div>
             </ScrollReveal>
-          )
-        })}
+          ))
+        )}
       </div>
     </main>
   )
