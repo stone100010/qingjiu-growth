@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { ScrollReveal } from '@/components/ScrollReveal'
+import ScrollReveal from '@/components/ScrollReveal'
 import { GrowthEntryCard } from '@/components/GrowthEntryCard'
-import { Navigation } from '@/components/Navigation'
+import Navigation from '@/components/Navigation'
 import { SkeletonGrid } from '@/components/ui/skeleton'
 import { SearchBar } from '@/components/ui/search'
 

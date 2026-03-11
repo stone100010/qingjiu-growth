@@ -1,5 +1,5 @@
-import { ScrollReveal } from '@/components/ScrollReveal'
-import { Navigation } from '@/components/Navigation'
+import ScrollReveal from '@/components/ScrollReveal'
+import Navigation from '@/components/Navigation'
 
 export default function AboutPage() {
   return (

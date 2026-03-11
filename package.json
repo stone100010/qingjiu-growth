@@ -14,26 +14,27 @@
     "db:seed:full": "tsx prisma/seed-full.ts"
   },
   "dependencies": {
-    "next": "^15.1.4",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
     "@prisma/client": "^6.0.1",
     "@splinetool/react-spline": "^4.0.0",
+    "@swc/helpers": "^0.5.19",
     "clsx": "^2.1.0",
-    "recharts": "^2.10.0"
+    "next": "^15.5.12",
+    "react": "^19.2.4",
+    "react-dom": "^19.2.4",
+    "recharts": "^2.15.4"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^19",
+    "@types/node": "20.19.37",
+    "@types/react": "19.2.14",
     "@types/react-dom": "^19",
-    "typescript": "^5",
-    "prisma": "^6.0.1",
-    "tsx": "^4.19.2",
+    "autoprefixer": "^10.4.27",
     "eslint": "^9",
     "eslint-config-next": "^15.1.4",
-    "tailwindcss": "^3.4.1",
-    "postcss": "^8",
-    "autoprefixer": "^10.4.20",
-    "framer-motion": "^11.0.0"
+    "framer-motion": "^11.0.0",
+    "postcss": "^8.5.8",
+    "prisma": "^6.0.1",
+    "tailwindcss": "^3.4.19",
+    "tsx": "^4.19.2",
+    "typescript": "^5"
   }
 }

@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { ScrollReveal } from '@/components/ScrollReveal'
+import ScrollReveal from '@/components/ScrollReveal'
 import { ProjectCard } from '@/components/ProjectCard'
-import { Navigation } from '@/components/Navigation'
+import Navigation from '@/components/Navigation'
 import { SkeletonCard } from '@/components/ui/skeleton'
 
 interface Project {

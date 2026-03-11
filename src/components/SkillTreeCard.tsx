@@ -1,6 +1,6 @@
 'use client'
 
-import { ScrollReveal } from './ScrollReveal'
+import ScrollReveal from './ScrollReveal'
 
 interface Skill {
   id: string
