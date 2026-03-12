@@ -88,7 +88,30 @@ export default function HomePage() {
           </div>
         </ScrollReveal>
 
+        {/* 导航卡片 */}
         <ScrollReveal delay={100}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8 md:mb-12">
+            <a href="/growth" className="p-6 glass-organic rounded-3xl hover-card-organic transition-all hover:scale-105">
+              <div className="text-4xl mb-3">🌱</div>
+              <h3 className="text-xl font-bold mb-2" style={{fontFamily: 'var(--font-organic)', color: '#38a3a5'}}>成长记录</h3>
+              <p className="text-sm text-sky-blue">每日学习心得与实践总结</p>
+            </a>
+
+            <a href="/skills" className="p-6 glass-organic rounded-3xl hover-card-organic transition-all hover:scale-105">
+              <div className="text-4xl mb-3">🌳</div>
+              <h3 className="text-xl font-bold mb-2" style={{fontFamily: 'var(--font-organic)', color: '#38a3a5'}}>技能树</h3>
+              <p className="text-sm text-sky-blue">技能解锁与熟练度追踪</p>
+            </a>
+
+            <a href="/projects" className="p-6 glass-organic rounded-3xl hover-card-organic transition-all hover:scale-105">
+              <div className="text-4xl mb-3">🚀</div>
+              <h3 className="text-xl font-bold mb-2" style={{fontFamily: 'var(--font-organic)', color: '#38a3a5'}}>项目作品集</h3>
+              <p className="text-sm text-sky-blue">从想法到实现的完整记录</p>
+            </a>
+          </div>
+        </ScrollReveal>
+
+        <ScrollReveal delay={150}>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 mb-8 md:mb-12">
             <div className="p-3 md:p-4 glass-organic rounded-2xl text-center">
               <div className="text-xl md:text-2xl mb-1">🟢</div>
