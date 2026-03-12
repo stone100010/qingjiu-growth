@@ -31,14 +31,14 @@ export function SearchBar({
   };
 
   return (
-    <div className={`relative ${className}`}>
+    <div className={`relative w-full ${className}`}>
       <div className={`
         relative flex items-center transition-all duration-300
-        ${isFocused ? 'scale-105' : 'scale-100'}
+        ${isFocused ? 'scale-[1.02] md:scale-105' : 'scale-100'}
       `}>
         {/* 搜索图标 */}
         <motion.svg
-          className="absolute left-4 w-5 h-5 text-sage-green"
+          className="absolute left-3 md:left-4 w-4 h-4 md:w-5 md:h-5 text-sage-green"
           animate={{ color: isFocused ? 'rgb(56, 163, 165)' : 'rgb(148, 168, 155)' }}
           fill="none"
           stroke="currentColor"
@@ -61,7 +61,7 @@ export function SearchBar({
           onBlur={() => setIsFocused(false)}
           placeholder={placeholder}
           className={`
-            w-full pl-12 pr-12 py-3 rounded-2xl
+            w-full pl-10 md:pl-12 pr-10 md:pr-12 py-2.5 md:py-3 rounded-xl md:rounded-2xl text-sm md:text-base
             glass-organic border-2 transition-all duration-300
             focus:outline-none
             ${isFocused 
@@ -81,11 +81,11 @@ export function SearchBar({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.5 }}
               onClick={handleClear}
-              className="absolute right-4 p-1 rounded-full hover:bg-qingjiu-pink/20 transition-colors"
+              className="absolute right-3 md:right-4 p-1 rounded-full hover:bg-qingjiu-pink/20 transition-colors"
               aria-label="清除搜索"
             >
               <svg
-                className="w-5 h-5 text-sage-green hover:text-qingjiu-pink"
+                className="w-4 h-4 md:w-5 md:h-5 text-sage-green hover:text-qingjiu-pink"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -109,7 +109,7 @@ export function SearchBar({
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="absolute top-full left-0 right-0 mt-2 p-3 glass-organic rounded-2xl text-sm text-sage-green z-10"
+            className="absolute top-full left-0 right-0 mt-2 p-2 md:p-3 glass-organic rounded-xl md:rounded-2xl text-xs md:text-sm text-sage-green z-10"
           >
             <p>💡 提示：输入关键词搜索相关内容</p>
           </motion.div>
@@ -173,16 +173,22 @@ interface FilterGroupProps {
   activeFilter: string;
   onChange: (filterId: string) => void;
   className?: string;
+  scrollable?: boolean;
 }
 
 export function FilterGroup({ 
   filters, 
   activeFilter, 
   onChange,
-  className = ''
+  className = '',
+  scrollable = false
 }: FilterGroupProps) {
+  const containerClass = scrollable
+    ? 'flex gap-2 overflow-x-auto pb-2 scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0'
+    : 'flex flex-wrap gap-2';
+
   return (
-    <div className={`flex flex-wrap gap-2 ${className}`}>
+    <div className={`${containerClass} ${className}`}>
       {filters.map((filter) => (
         <FilterTag
           key={filter.id}

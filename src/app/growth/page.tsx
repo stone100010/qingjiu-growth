@@ -127,11 +127,12 @@ export default function GrowthPage() {
 
         {/* 筛选器 */}
         <FadeIn delay={0.2}>
-          <div className="mb-8">
+          <div className="mb-6 md:mb-8">
             <FilterGroup
               filters={filterOptions}
               activeFilter={filter}
               onChange={setFilter}
+              scrollable={true}
             />
           </div>
         </FadeIn>
@@ -147,36 +148,36 @@ export default function GrowthPage() {
 
         {/* 成长记录列表 */}
         {filteredEntries.length > 0 ? (
-          <StaggerContainer className="space-y-6" staggerDelay={0.1}>
+          <StaggerContainer className="space-y-4 md:space-y-6" staggerDelay={0.1}>
             {filteredEntries.map((entry) => {
               const config = typeConfig[entry.type as keyof typeof typeConfig]
               return (
-                <div key={entry.id} className="p-6 glass-organic rounded-3xl hover-card-organic">
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{background: 'rgba(56, 163, 165, 0.2)'}}>
+                <div key={entry.id} className="p-4 md:p-6 glass-organic rounded-2xl md:rounded-3xl hover-card-organic">
+                  <div className="flex items-start gap-3 md:gap-4">
+                    <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-xl md:text-2xl" style={{background: 'rgba(56, 163, 165, 0.2)'}}>
                       {entry.emoji}
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-2 mb-2">
-                        <h3 className="text-xl font-bold" style={{fontFamily: 'var(--font-tech)'}}>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 mb-2">
+                        <h3 className="text-lg md:text-xl font-bold truncate" style={{fontFamily: 'var(--font-tech)'}}>
                           {entry.title}
                         </h3>
-                        <span className="text-xs px-2 py-1 rounded-full" style={{background: config.bg, color: config.color}}>
+                        <span className="text-xs px-2 py-1 rounded-full whitespace-nowrap" style={{background: config.bg, color: config.color}}>
                           {config.label}
                         </span>
                       </div>
-                      <div className="text-xs text-sage-green mb-3">{entry.date}</div>
-                      <p className="text-sky-blue mb-4">
+                      <div className="text-xs text-sage-green mb-2 md:mb-3">{entry.date}</div>
+                      <p className="text-sm md:text-base text-sky-blue mb-3 md:mb-4 line-clamp-3 md:line-clamp-none">
                         {entry.description}
                       </p>
-                      <div className="flex flex-wrap gap-2 mb-3">
+                      <div className="flex flex-wrap gap-1.5 md:gap-2 mb-2 md:mb-3">
                         {entry.skills.map((skill) => (
                           <span key={skill} className="text-xs px-2 py-1 rounded" style={{background: 'rgba(56, 163, 165, 0.2)', color: '#38a3a5'}}>
                             {skill}
                           </span>
                         ))}
                       </div>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1.5 md:gap-2">
                         {entry.tags.map((tag) => (
                           <span key={tag} className="text-xs px-2 py-1 rounded-full" style={{background: 'rgba(148, 168, 155, 0.3)'}}>
                             {tag}
