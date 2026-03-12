@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import ScrollReveal from '@/components/ScrollReveal'
+import { StaggerContainer, FadeIn } from '@/components/ui/Motion'
 import Link from 'next/link'
 
 export default function GrowthPage() {
@@ -11,14 +11,14 @@ export default function GrowthPage() {
     <main className="min-h-screen mesh-gradient organic-wave">
       <div className="container mx-auto px-4 py-8">
         {/* 返回首页 */}
-        <ScrollReveal direction="down">
+        <FadeIn direction="down">
           <Link href="/" className="inline-flex items-center gap-2 mb-8 text-sky-blue hover:underline">
             <span>←</span> 返回首页
           </Link>
-        </ScrollReveal>
+        </FadeIn>
 
         {/* 标题 */}
-        <ScrollReveal delay={100}>
+        <FadeIn delay={0.1}>
           <div className="mb-8">
             <h1 className="text-4xl md:text-5xl font-bold mb-3" style={{fontFamily: 'var(--font-organic)', color: '#38a3a5'}}>
               🌱 成长记录
@@ -27,10 +27,10 @@ export default function GrowthPage() {
               每一步成长，都值得记录
             </p>
           </div>
-        </ScrollReveal>
+        </FadeIn>
 
         {/* 筛选器 */}
-        <ScrollReveal delay={150}>
+        <FadeIn delay={0.15}>
           <div className="flex flex-wrap gap-2 mb-8">
             <button
               onClick={() => setFilter('all')}
@@ -83,11 +83,10 @@ export default function GrowthPage() {
               ⚙️ 系统
             </button>
           </div>
-        </ScrollReveal>
+        
 
         {/* 成长记录列表 */}
-        <div className="space-y-6">
-          <ScrollReveal delay={200}>
+        <StaggerContainer className="space-y-6" staggerDelay={0.1}>
             <div className="p-6 glass-organic rounded-3xl hover-card-organic">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{background: 'rgba(56, 163, 165, 0.2)'}}>
@@ -131,9 +130,7 @@ export default function GrowthPage() {
                 </div>
               </div>
             </div>
-          </ScrollReveal>
-
-          <ScrollReveal delay={250}>
+        </StaggerContainer>
             <div className="p-6 glass-organic rounded-3xl hover-card-organic">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{background: 'rgba(56, 163, 165, 0.2)'}}>
@@ -180,9 +177,8 @@ export default function GrowthPage() {
                 </div>
               </div>
             </div>
-          </ScrollReveal>
+          
 
-          <ScrollReveal delay={300}>
             <div className="p-6 glass-organic rounded-3xl hover-card-organic">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{background: 'rgba(56, 163, 165, 0.2)'}}>
@@ -226,9 +222,8 @@ export default function GrowthPage() {
                 </div>
               </div>
             </div>
-          </ScrollReveal>
+          
 
-          <ScrollReveal delay={350}>
             <div className="p-6 glass-organic rounded-3xl hover-card-organic">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{background: 'rgba(56, 163, 165, 0.2)'}}>
@@ -272,9 +267,8 @@ export default function GrowthPage() {
                 </div>
               </div>
             </div>
-          </ScrollReveal>
+          
 
-          <ScrollReveal delay={400}>
             <div className="p-6 glass-organic rounded-3xl hover-card-organic">
               <div className="flex items-start gap-4">
                 <div className="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-2xl" style={{background: 'rgba(56, 163, 165, 0.2)'}}>
@@ -318,7 +312,7 @@ export default function GrowthPage() {
                 </div>
               </div>
             </div>
-          </ScrollReveal>
+          
         </div>
 
         <footer className="text-center py-8 mt-8">
