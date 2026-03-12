@@ -15,6 +15,7 @@ export default function Navigation() {
     { href: '/growth', label: '成长', icon: '🌱' },
     { href: '/skills', label: '技能树', icon: '⚡' },
     { href: '/projects', label: '项目', icon: '🚀' },
+    { href: '/about', label: '关于', icon: '🌸' },
   ];
 
   return (
