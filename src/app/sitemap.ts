@@ -1,5 +1,4 @@
 import { MetadataRoute } from 'next'
-import { growthEntries } from '@/data/mock-data'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://qingjiu-growth-stone100010s-projects.vercel.app'
