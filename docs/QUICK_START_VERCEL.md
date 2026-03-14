@@ -1,88 +1,126 @@
-# Vercel Postgres 配置步骤
+# Vercel快速开始指南
 
-## 快速开始（3步配置）
+## 🚀 5分钟快速部署
 
-### 1️⃣ 在Vercel创建数据库
+### 前提条件
 
-1. Vercel Dashboard → **qingjiu-growth** 项目
-2. 点击 **Storage** 标签
-3. **Create Database** → 选择 **Postgres**
-4. Region: **Singapore**
-5. 点击 **Create**
+- ✅ GitHub账户
+- ✅ Vercel账户
+- ✅ 项目代码已推送到GitHub
 
-### 2️⃣ 连接项目
+---
 
-1. Storage页面找到刚创建的数据库
-2. 点击 **Connect**
-3. 选择 `qingjiu-growth` 项目
-4. 点击 **Connect**
+## 📋 部署步骤
 
-✅ Vercel自动添加环境变量！
+### 1. 连接GitHub仓库
 
-### 3️⃣ 本地开发配置
+1. 登录 Vercel Dashboard
+2. 点击 "Add New Project"
+3. 导入GitHub仓库 `stone100010/qingjiu-growth`
+4. 点击 "Deploy"
+
+### 2. 配置环境变量
+
+在Vercel项目设置中添加：
+
+```
+DATABASE_URL="你的PostgreSQL连接字符串"
+```
+
+### 3. 推送数据库Schema
 
 ```bash
-# 拉取Vercel环境变量到本地
-vercel env pull .env
-
-# 生成Prisma Client
-npx prisma generate
-
-# 推送Schema到Vercel Postgres
+# 在项目根目录执行
 npx prisma db push
-
-# 填充测试数据
-npm run db:seed:full
-
-# 提交代码触发部署
-git push origin main
 ```
 
----
-
-## 环境变量说明
-
-Vercel会自动添加：
-- `POSTGRES_URL` - 数据库连接
-- `POSTGRES_PRISMA_URL` - Prisma专用（推荐使用）
-- `DATABASE_URL` - 标准连接
-- `POSTGRES_URL_NON_POOLING` - 无连接池
-
-Prisma配置：
-```prisma
-datasource db {
-  provider = "postgresql"
-  url      = env("POSTGRES_PRISMA_URL")
-}
-```
-
----
-
-## 数据迁移
-
-### 从内网数据库迁移
+### 4. 填充数据
 
 ```bash
-# 导出内网数据
-pg_dump -h 192.168.1.16 -U openaigc -d qingjiu_growth > backup.sql
+npm run db:seed
+```
 
-# 导入到Vercel Postgres
+---
+
+## 💻 本地开发
+
+### 安装依赖
+
+```bash
+npm install
+```
+
+### 配置环境变量
+
+```bash
+# 复制模板
+cp .env.example .env.local
+
+# 编辑数据库URL
+DATABASE_URL="postgresql://openaigc:YOUR_PASSWORD@YOUR_HOST_IP:5432/qingjiu_growth"
+```
+
+### 启动开发服务器
+
+```bash
+npm run dev
+```
+
+访问 http://localhost:3000
+
+---
+
+## 🗄️ 数据库备份
+
+### 导出数据
+
+```bash
+pg_dump -h YOUR_HOST_IP -U openaigc -d qingjiu_growth > backup.sql
+```
+
+### 导入数据
+
+```bash
 psql $DATABASE_URL < backup.sql
 ```
 
-### 或重新填充（更简单）
+---
 
-```bash
-npm run db:seed:full
+## 📝 开发流程
+
+1. 本地开发 → 2. 测试 → 3. Git提交 → 4. Vercel自动部署
+
+---
+
+## 🔒 安全注意事项
+
+- ✅ 不要提交 `.env` 文件
+- ✅ 使用强密码
+- ✅ 定期更换密钥
+- ✅ 限制数据库访问
+
+---
+
+## 🎯 项目结构
+
+```
+qingjiu-growth/
+├── src/           # 源代码
+├── prisma/        # 数据库Schema
+├── public/        # 静态资源
+├── docs/          # 文档
+└── README.md      # 项目说明
 ```
 
 ---
 
-## 完成！
+## 📞 获取帮助
 
-- ✅ 本地开发：可继续使用内网数据库
-- ✅ Vercel生产：自动连接云端数据库
-- ✅ 自动部署：push代码 → 自动构建
-- ✅ 全球加速：边缘网络访问
+- 查看 `docs/` 文件夹获取详细文档
+- 查看 `TODO.md` 了解开发进度
+- 查看 `README.md` 了解项目信息
 
-访问: https://qingjiu-growth.vercel.app 🚀
+---
+
+_清玖成长网站 - 快速开始指南_
+_最后更新: 2026-03-14_

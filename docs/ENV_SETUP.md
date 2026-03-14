@@ -15,7 +15,7 @@ postgresql://用户名:密码@主机:端口/数据库名?schema=public
 
 #### 本地开发（内网数据库）
 ```bash
-DATABASE_URL="postgresql://openaigc:odysseywarsaw@192.168.1.16:5432/qingjiu_growth?schema=public"
+DATABASE_URL="postgresql://openaigc:YOUR_PASSWORD@YOUR_HOST_IP:5432/qingjiu_growth?schema=public"
 ```
 
 #### Vercel生产（Vercel Postgres）
@@ -56,7 +56,7 @@ vercel env pull .env
 
 ### 开发环境（.env.local）
 ```bash
-DATABASE_URL="postgresql://openaigc:odysseywarsaw@192.168.1.16:5432/qingjiu_growth?schema=public"
+DATABASE_URL="postgresql://openaigc:YOUR_PASSWORD@YOUR_HOST_IP:5432/qingjiu_growth?schema=public"
 ```
 
 ### 生产环境（Vercel自动）
@@ -86,3 +86,4 @@ npx prisma studio
 2. ✅ 永远不要提交环境变量到Git
 3. ✅ 生产环境使用Vercel环境变量
 4. ✅ 定期更换数据库密码
+5. ✅ 使用强密码

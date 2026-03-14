@@ -1,79 +1,76 @@
-# ✅ Neon数据库配置完成！
+# Neon部署下一步操作
 
-## 🎉 已完成的配置
+## ✅ 已完成
 
-### 1. Neon数据库创建
-- ✅ 小阳子在Vercel Dashboard创建了Neon数据库
-- ✅ 配置了Production/Preview/Development环境
-- ✅ 使用Custom Prefix: NEON_
-
-### 2. Vercel环境变量
-Neon已自动添加到Vercel：
-- ✅ `NEON_DATABASE_URL`
-- ✅ `NEON_POSTGRES_PRISMA_URL`
-- ✅ `NEON_POSTGRES_URL_NON_POOLING`
-
-### 3. 代码配置
-- ✅ Prisma Schema配置（使用DATABASE_URL）
-- ✅ 本地开发：内网数据库（192.168.1.16）
-- ✅ Vercel部署：会自动使用Neon（需要配置DATABASE_URL别名）
-
-### 4. Git提交
-- ✅ 代码已push到GitHub（commit 1f99efd）
-- ⏳ Vercel正在自动部署中...
+- Neon数据库创建
+- Vercel项目连接
+- 环境变量配置
 
 ---
 
-## 📝 下一步操作（小阳子需要做）
+## 🚀 下一步操作
 
-### 步骤1：添加DATABASE_URL环境变量到Vercel
+### 1. 本地开发环境配置
 
-**为什么**：让Vercel部署时使用Neon数据库
-
-**操作**：
-1. 打开Vercel Dashboard → qingjiu-growth项目
-2. Settings → Environment Variables
-3. 点击 **Add New**
-4. 填写：
-   - **Name**: `DATABASE_URL`
-   - **Value**: 点击右侧的 **Browse** → 选择 `NEON_DATABASE_URL`（或直接粘贴Neon连接字符串）
-   - **Environments**: ✅ Production ✅ Preview ✅ Development
-5. 点击 **Save**
-
-### 步骤2：等待Vercel部署完成
-- 查看Deployments标签
-- 等待当前部署完成（约1-2分钟）
-
-### 步骤3：验证部署
-访问 https://qingjiu-growth.vercel.app 检查是否正常
-
----
-
-## 🔧 数据库Schema推送
-
-Vercel部署完成后，需要推送数据库Schema：
-
-### 选项A：通过Vercel CLI（推荐）
 ```bash
+# 拉取Vercel环境变量
 vercel env pull .env.local
+
+# 生成Prisma Client
+npx prisma generate
+
+# 推送Schema
 npx prisma db push
 ```
 
-### 选项B：通过Vercel Dashboard添加Build命令
-在Vercel项目设置中添加Build命令：
+### 2. 填充数据
+
+```bash
+npm run db:seed
 ```
-npx prisma generate && npx prisma db push && next build
+
+### 3. 本地开发
+
+```bash
+npm run dev
+```
+
+访问 http://localhost:3000
+
+---
+
+## 🌿 数据迁移（可选）
+
+### 从内网数据库迁移
+
+如果已有数据在内网PostgreSQL：
+
+```bash
+# 导出
+pg_dump -h YOUR_HOST_IP -U openaigc -d qingjiu_growth > backup.sql
+
+# 导入到Neon
+psql $DATABASE_URL < backup.sql
 ```
 
 ---
 
-## 🎯 完成后效果
+## 📊 验证部署
 
-- ✅ 本地开发：连接内网数据库（快速）
-- ✅ Vercel生产：连接Neon云端数据库
-- ✅ 代码push → 自动部署 → 自动数据库迁移
-- ✅ 全球加速访问
+访问Vercel部署URL，验证：
+- ✅ 数据正常显示
+- ✅ 页面加载正常
+- ✅ API响应正常
 
 ---
 
-小阳子，先完成"步骤1"添加DATABASE_URL环境变量！
+## 🎯 完成标志
+
+- 本地开发环境正常
+- Vercel生产环境正常
+- 数据库Schema已推送
+- 种子数据已填充
+
+---
+
+_清玖成长网站 - Neon部署后续步骤_

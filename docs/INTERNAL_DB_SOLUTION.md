@@ -6,10 +6,10 @@
 
 ```
 本地开发:
-  localhost → 192.168.1.16:5432 → qingjiu_growth
+  localhost → 内网PostgreSQL → qingjiu_growth
 
 Vercel部署:
-  Vercel → 内网穿透/frp → 192.168.1.16:5432 → qingjiu_growth
+  Vercel → 内网穿透/frp → 内网PostgreSQL → qingjiu_growth
 ```
 
 ### 方案A：使用Cloudflare Tunnel（推荐）
@@ -21,20 +21,20 @@ Vercel部署:
 - 自动HTTPS
 
 **配置**：
-1. 在RTX-3090设备上安装cloudflared
+1. 在内网设备上安装cloudflared
 2. 创建tunnel映射PostgreSQL端口
 3. Vercel连接tunnel URL
 
 ### 方案B：使用frp
 
 **优点**：
-- 需要公网服务器（你可能有）
+- 需要公网服务器
 - 配置简单
 - 性能好
 
 ### 方案C：直接使用公网IP
 
-如果你有公网IP，直接开放PostgreSQL端口（加强安全）
+如果有公网IP，直接开放PostgreSQL端口（加强安全）
 
 ---
 
@@ -52,10 +52,35 @@ Vercel部署:
 
 ## 自动化脚本
 
-我可以写脚本自动：
+可以写脚本自动：
 1. 创建新database
 2. 推送Schema
 3. 填充数据
 4. 配置环境变量
 
-**完全自动化，不需要你手动操作！**
+**完全自动化，不需要手动操作！**
+
+---
+
+## 🔒 安全配置
+
+### 本地开发
+
+在 `.env.local` 中配置：
+```
+DATABASE_URL="postgresql://openaigc:YOUR_PASSWORD@YOUR_HOST_IP:5432/qingjiu_growth"
+```
+
+### 生产部署
+
+使用环境变量管理平台（如Vercel）
+```
+DATABASE_URL="postgresql://openaigc:YOUR_PASSWORD@YOUR_HOST_IP:5432/qingjiu_growth"
+```
+
+### 注意事项
+
+- 不要在代码中硬编码密码
+- 定期更换数据库密码
+- 限制数据库访问IP
+- 使用强密码

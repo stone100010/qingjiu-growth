@@ -1,11 +1,13 @@
 const { Client } = require('pg');
+require('dotenv').config();
 
 async function createDatabase() {
+  // 从环境变量读取数据库配置
   const client = new Client({
-    host: '192.168.1.16',
-    port: 5432,
-    user: 'openaigc',
-    password: 'odysseywarsaw',
+    host: process.env.DB_HOST || 'YOUR_HOST_IP',
+    port: process.env.DB_PORT || 5432,
+    user: process.env.DB_USER || 'openaigc',
+    password: process.env.DB_PASSWORD || 'YOUR_PASSWORD',
     database: 'postgres' // 连接到默认的postgres数据库
   });
 

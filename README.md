@@ -99,8 +99,8 @@ cp .env.example .env
 # 配置数据库URL（Neon PostgreSQL）
 # DATABASE_URL="postgresql://..."
 
-# 或使用内网数据库（192.168.1.16）
-# DATABASE_URL="postgresql://openaigc:odysseywarsaw@192.168.1.16:5432/qingjiu_growth"
+# 或使用内网数据库
+# DATABASE_URL="postgresql://openaigc:YOUR_PASSWORD@YOUR_HOST_IP:5432/qingjiu_growth"
 ```
 
 ### 数据库设置（可选，当前使用模拟数据）
@@ -209,8 +209,8 @@ git push origin main
 - 配置文件位于：`/home/node/.openclaw/workspace/TOOLS.md`
 
 ### 敏感信息
-- 数据库密码：`odysseywarsaw`
-- 内网服务器：`192.168.1.16`
+- 数据库凭证：存储在私密配置文件（未提交到Git）
+- 内网服务器信息：存储在本地环境变量
 - GitHub Token：存储在私密配置文件
 
 ---

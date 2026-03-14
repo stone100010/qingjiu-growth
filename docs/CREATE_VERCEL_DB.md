@@ -1,12 +1,6 @@
 # 🚀 Vercel Postgres 创建操作指南
 
-## 小阳子，请你来操作这一步！💕
-
-由于需要浏览器操作，请你按照以下步骤在Vercel Dashboard中创建数据库。
-
----
-
-## 📝 操作步骤（5分钟完成）
+## 操作步骤（5分钟完成）
 
 ### 步骤1：打开Vercel Dashboard
 
@@ -46,9 +40,9 @@ https://vercel.com/dashboard
 
 ---
 
-## 🎯 完成后告诉我
+## 🎯 完成后的操作
 
-创建完成后，告诉我一声，我会帮你：
+创建完成后，进行以下配置：
 
 1. ✅ 配置本地开发环境
 2. ✅ 推送数据库Schema到Vercel Postgres
@@ -59,7 +53,7 @@ https://vercel.com/dashboard
 
 ## 📸 预期结果
 
-完成后你应该看到：
+完成后应该看到：
 
 **Storage页面**：
 ```
@@ -84,4 +78,4 @@ POSTGRES_URL_NON_POOLING
 
 ---
 
-小阳子，操作完成后告诉我，我来继续配置后续步骤！🌸
+_清玖成长网站 - Vercel Postgres配置指南_

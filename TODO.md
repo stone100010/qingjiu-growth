@@ -11,13 +11,13 @@
 
 ### 配置基础设施
 - [x] **服务器配置获取** ✓
-  - [x] RTX-3090设备信息（192.168.1.16）
-  - [x] PostgreSQL配置（用户名openaigc，密码odysseywarsaw）
-  - [x] Redis配置（密码odysseywarsaw）
+  - [x] RTX-3090设备信息（内网IP）
+  - [x] PostgreSQL配置（用户名和密码已存储在私密配置）
+  - [x] Redis配置（密码已存储在私密配置）
   - [x] Ollama配置（端口11434）
-  - [x] 存储到TOOLS.md
+  - [x] 存储到TOOLS.md（使用占位符）
   - [x] 创建.env文件
-  - [x] 创建.env.example
+  - [x] 创建.env.example（使用占位符）
 
 - [x] **GitHub配置完成** ✓
   - [x] 创建GitHub仓库：stone100010/qingjiu-growth
